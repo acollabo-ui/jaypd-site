@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { SITE } from '../config';
 import { getCollection, render } from 'astro:content';
 
 const posts = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date);
@@ -8,16 +9,17 @@ const { Content } = await render(latest);
 const fmt = (d: Date) => d.toISOString().slice(0, 10);
 ---
 <Base>
-  <!-- 최신 글 전문 — 목록이 아니라 글 자체가 첫 화면이다 -->
-  <article style="margin-top: 2.5em;">
+  <article>
     <h1><a href={`/blog/${latest.id}/`} style="color: var(--ink);">{latest.data.title}</a></h1>
     <p class="meta">{fmt(latest.data.date)} · {latest.data.series}</p>
     <Content />
+    <div class="mix-line">
+      16년차 믹스 엔지니어에게 곡을 맡기고 싶다면 → <a href={SITE.links.mix}>믹스 의뢰하기</a>
+    </div>
   </article>
 
   <hr />
 
-  <!-- 이전 글 — 제목 + 날짜 한 줄씩, 라벨 없음 -->
   {rest.slice(0, 10).map((p) => (
     <div class="post-line">
       <a href={`/blog/${p.id}/`}>{p.data.title}</a>

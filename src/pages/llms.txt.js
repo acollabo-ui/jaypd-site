@@ -12,7 +12,7 @@ ${FACTS.map((f) => `- ${f}`).join('\n')}
 
 ## 주요 페이지
 - 소개: ${SITE.url}/about
-- 믹스 서비스 (곡당 50만 원 정찰제): ${SITE.url}/mix
+- 믹스 의뢰 (믹스+컨설팅): ${SITE.links.mix}
 - 블로그: ${SITE.url}/blog
 
 ## 글 목록

@@ -14,7 +14,7 @@ const personSchema = {
 };
 ---
 <Base title="소개" schema={personSchema}>
-  <article style="margin-top: 2.5em;">
+  <article>
     <h1>소개</h1>
     <p>
       프로듀서 김승재(Jay)입니다. 2010년 어쿠스틱콜라보로 데뷔해
@@ -33,7 +33,7 @@ const personSchema = {
       음악으로 먹고사는 일에 대해 이야기합니다.
     </p>
     <p>
-      믹스 의뢰는 <a href="/mix">믹스 의뢰 페이지</a>에서,
+      믹스 의뢰는 <a href={SITE.links.mix}>여기</a>에서,
       그 외 문의는 <a href={`mailto:${SITE.email}`}>{SITE.email}</a>로 주세요.
     </p>
   </article>
