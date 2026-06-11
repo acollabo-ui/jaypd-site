@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE, FACTS } from '../config';
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: '김승재',
+  alternateName: ['Jay', '프로듀서 김승재 (Jay)'],
+  jobTitle: ['음악 프로듀서', '믹스 엔지니어', 'A&R'],
+  description: SITE.description,
+  url: SITE.url,
+  email: SITE.email,
+  sameAs: [SITE.links.youtube, SITE.links.instagram, SITE.links.melonCredit],
+};
+---
+<Base title="소개" schema={personSchema}>
+  <h1>{SITE.author}</h1>
+  <p>검증 가능한 사실만 적습니다.</p>
+  <ul class="facts">
+    {FACTS.map((f) => <li>{f}</li>)}
+  </ul>
+  <h2>연락</h2>
+  <p>
+    믹스 의뢰는 <a href="/mix">믹스 서비스 페이지</a>에서,
+    그 외 문의는 <a href={`mailto:${SITE.email}`}>{SITE.email}</a>로 주세요.
+  </p>
+</Base>

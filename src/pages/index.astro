@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date);
+const fmt = (d: Date) => d.toISOString().slice(0, 10);
+---
+<Base>
+  <h1>음악이 막힐 때 찾는 16년차 프로듀서</h1>
+  <p>
+    {SITE.author}. 어쿠스틱콜라보로 데뷔해 프로듀서·믹스 엔지니어·A&R로
+    일해왔습니다. 믹싱과 음악 커리어에 대해 묻고 답하는 글을 씁니다.
+  </p>
+  <p><a class="btn" href="/mix">믹스 서비스 보기</a></p>
+
+  <h2>최신 글</h2>
+  <ul class="post-list">
+    {posts.map((p) => (
+      <li>
+        <a href={`/blog/${p.id}/`}>{p.data.title}</a>
+        <div class="meta">{fmt(p.data.date)} · {p.data.series}</div>
+        <p>{p.data.description}</p>
+      </li>
+    ))}
+  </ul>
+</Base>
