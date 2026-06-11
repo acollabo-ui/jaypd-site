@@ -32,7 +32,7 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     <script type="application/ld+json" set:html={JSON.stringify(s)} />
   ))}
   <style is:global>
-    /* jaypd.kr — 세스 고딘 방향. 디자인은 글 뒤로 숨는다. */
+    /* jaypd.kr — 좌측 메뉴 + 우측 본문. 색 3개, 장식 없음. */
     :root {
       --ink:        #1A1A1A;
       --ink-soft:   #6B6B6B;
@@ -51,7 +51,25 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       line-height: 1.8;
       -webkit-font-smoothing: antialiased;
     }
-    main, .site-header, .site-footer { max-width: 660px; margin: 0 auto; padding: 0 20px; }
+    .layout { display: flex; max-width: 1000px; margin: 0 auto; gap: 56px; padding: 0 20px; }
+
+    /* 좌측 사이드바 */
+    .sidebar {
+      width: 200px; flex-shrink: 0;
+      position: sticky; top: 0; align-self: flex-start;
+      padding: 2.5em 0 2em;
+    }
+    .sidebar .logo { font-size: 22px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
+    .sidebar .logo .dot { color: var(--amber); }
+    .sidebar .tagline { margin: 0.4em 0 1.5em; color: var(--ink-soft); font-size: 13px; line-height: 1.6; }
+    .sidebar nav a { display: block; color: var(--ink); font-size: 16px; padding: 0.25em 0; }
+    .sidebar nav a:hover { color: var(--amber-dark); }
+    .sidebar .side-links { margin-top: 2em; padding-top: 1.2em; border-top: 1px solid var(--rule); font-size: 13px; }
+    .sidebar .side-links a { display: block; color: var(--ink-soft); padding: 0.15em 0; }
+    .sidebar .side-links a:hover { color: var(--amber-dark); }
+
+    /* 우측 본문 */
+    main { flex: 1; min-width: 0; max-width: 660px; padding: 2.5em 0 5em; }
 
     h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.4; margin: 0 0 0.3em; }
     h2 { font-size: 22px; font-weight: 700; margin: 2.5em 0 0.6em; }
@@ -63,58 +81,47 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     article img { max-width: 100%; }
     ol, ul { padding-left: 1.4em; }
 
-    /* 헤더 — 로고(임시: 이름 + 앰버 마침표) + 한 줄 소개 + 텍스트 나비 3개 */
-    .site-header { padding-top: 2.5em; }
-    .site-header .logo { font-size: 22px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
-    .site-header .logo .dot { color: var(--amber); }
-    .site-header .tagline { margin: 0.2em 0 0.8em; color: var(--ink-soft); font-size: 14px; }
-    .site-header nav { font-size: 16px; padding-bottom: 1.2em; border-bottom: 1px solid var(--rule); }
-    .site-header nav a { color: var(--ink); }
-    .site-header nav a:hover { color: var(--amber-dark); }
-    .site-header nav span { color: var(--rule); margin: 0 0.5em; }
-
-    /* 메타(날짜·카테고리) */
     .meta { color: var(--ink-soft); font-size: 14px; margin: 0 0 1.5em; }
 
-    /* 글 목록 — 한 줄 = 제목 + 날짜 */
     .post-line { display: flex; justify-content: space-between; align-items: baseline; gap: 1em; padding: 0.45em 0; }
     .post-line a { font-size: 18px; font-weight: 600; color: var(--ink); }
     .post-line a:hover { color: var(--amber-dark); }
     .post-line time { color: var(--ink-soft); font-size: 14px; white-space: nowrap; }
     .year-label { color: var(--ink-soft); font-size: 14px; margin: 2em 0 0.4em; }
 
-    /* 글 하단 / 푸터의 믹스 입구 한 줄 */
+    /* 글 하단 믹스 의뢰 한 줄 (외부 링크) */
     .mix-line { border-top: 1px solid var(--rule); padding-top: 1.5em; margin-top: 3em; }
 
-    /* 이전/다음 글 */
     .post-nav { display: flex; justify-content: space-between; gap: 1em; margin-top: 1.5em; font-size: 16px; }
 
-    .site-footer { padding: 1.5em 20px 4em; border-top: 1px solid var(--rule); margin-top: 4em; color: var(--ink-soft); font-size: 14px; }
-    .site-footer a { color: var(--ink-soft); text-decoration: underline; }
-    .site-footer a:hover { color: var(--amber-dark); }
-
-    /* /mix 전용 — 페이지에서 가장 큰 활자 */
-    .price { font-size: 36px; font-weight: 700; color: var(--amber); margin: 0.2em 0; }
-    details { margin: 0.8em 0; }
-    details summary { font-weight: 600; cursor: pointer; }
-
-    @media (max-width: 480px) {
+    /* 모바일: 사이드바를 상단으로 */
+    @media (max-width: 768px) {
       body { font-size: 17px; }
+      .layout { flex-direction: column; gap: 0; }
+      .sidebar { position: static; width: auto; padding-bottom: 1.2em; border-bottom: 1px solid var(--rule); }
+      .sidebar nav a { display: inline-block; margin-right: 1.2em; }
+      .sidebar .side-links { display: none; }
+      main { padding-top: 1.5em; }
     }
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <a class="logo" href="/">김승재<span class="dot">.</span></a>
-    <p class="tagline">프로듀서 김승재 (Jay) — 음악이 막힐 때 찾는 16년차 프로듀서</p>
-    <nav>
-      <a href="/blog">블로그</a><span>·</span><a href="/about">소개</a><span>·</span><a href="/mix">믹스 의뢰</a>
-    </nav>
-  </header>
-  <main><slot /></main>
-  <footer class="site-footer">
-    <p>믹스가 필요하신가요? → <a href="/mix">믹스 의뢰</a></p>
-    <p><a href={SITE.links.youtube}>유튜브 꼰대레코드</a> · <a href={`mailto:${SITE.email}`}>{SITE.email}</a> · <a href="/rss.xml">RSS</a></p>
-  </footer>
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="logo" href="/">김승재<span class="dot">.</span></a>
+      <p class="tagline">프로듀서 김승재 (Jay)<br />음악이 막힐 때 찾는 16년차 프로듀서</p>
+      <nav>
+        <a href="/">홈</a>
+        <a href="/blog">블로그</a>
+        <a href="/about">소개</a>
+      </nav>
+      <div class="side-links">
+        <a href={SITE.links.youtube}>유튜브 꼰대레코드</a>
+        <a href={`mailto:${SITE.email}`}>이메일</a>
+        <a href="/rss.xml">RSS</a>
+      </div>
+    </aside>
+    <main><slot /></main>
+  </div>
 </body>
 </html>
