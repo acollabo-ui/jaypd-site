@@ -8,5 +8,20 @@
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    // 프리뷰 창을 실제 사이트 본문처럼 보이게 (이미지 폭 제한 포함)
+    CMS.registerPreviewStyle(
+      [
+        "body { font-family: Pretendard, -apple-system, sans-serif; color: #1A1A1A;",
+        "  line-height: 1.8; font-size: 18px; max-width: 660px; margin: 0 auto; padding: 24px 20px; }",
+        "img { max-width: 100%; height: auto; }",
+        "h1 { font-size: 28px; font-weight: 700; line-height: 1.4; letter-spacing: -0.02em; }",
+        "h2 { font-size: 22px; font-weight: 700; margin-top: 2.5em; }",
+        "a { color: #D98E1F; text-decoration: none; }",
+        "blockquote { border-left: 2px solid #E5E5E5; margin: 1.2em 0; padding: 0 0 0 1em; color: #6B6B6B; }",
+      ].join("\n"),
+      { raw: true }
+    );
+  </script>
 </body>
 </html>
