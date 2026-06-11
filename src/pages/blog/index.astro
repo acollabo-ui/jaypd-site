@@ -15,7 +15,7 @@ for (const p of posts) {
 }
 ---
 <Base title="블로그" description={`${SITE.series} — ${SITE.author}의 글 목록`}>
-  <div style="margin-top: 2.5em;">
+  <div>
     <h1>블로그</h1>
     <p class="meta">{SITE.series}</p>
     {[...byYear.entries()].map(([year, yearPosts]) => (
