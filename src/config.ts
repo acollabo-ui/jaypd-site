@@ -12,7 +12,7 @@ export const SITE = {
     youtube: 'https://www.youtube.com/@TODO-꼰대레코드',
     instagram: 'https://www.instagram.com/TODO',
     melonCredit: 'https://www.melon.com/TODO',
-    mixForm: 'https://forms.gle/TODO', // 기존 구글폼
+    mix: 'https://suengjaesmix.netlify.app/', // 믹스+컨설팅 의뢰 (외부)
   },
 };
 
