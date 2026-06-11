@@ -1,33 +1,38 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { SITE } from '../../config';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
 const posts = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date);
 const fmt = (d: Date) => d.toISOString().slice(0, 10);
 
-// 연도별 구분 — 제목·날짜 한 줄, 요약문·썸네일 없음
-const byYear = new Map<number, typeof posts>();
-for (const p of posts) {
-  const y = p.data.date.getFullYear();
-  if (!byYear.has(y)) byYear.set(y, []);
-  byYear.get(y)!.push(p);
+// 접기/펴기용으로 본문까지 미리 렌더
+const items = [];
+for (const post of posts) {
+  const { Content } = await render(post);
+  items.push({ post, Content });
 }
 ---
 <Base title="블로그" description={`${SITE.series} — ${SITE.author}의 글 목록`}>
-  <div>
-    <h1>블로그</h1>
-    <p class="meta">{SITE.series}</p>
-    {[...byYear.entries()].map(([year, yearPosts]) => (
-      <>
-        <p class="year-label">{year}</p>
-        {yearPosts.map((p) => (
-          <div class="post-line">
-            <a href={`/blog/${p.id}/`}>{p.data.title}</a>
-            <time datetime={fmt(p.data.date)}>{fmt(p.data.date)}</time>
-          </div>
-        ))}
-      </>
-    ))}
+  <h1>블로그</h1>
+  <p class="meta">{SITE.series} · 제목을 누르면 글이 펼쳐집니다</p>
+
+  {items.map(({ post, Content }) => (
+    <details class="post-fold">
+      <summary>
+        <h2>{post.data.title}</h2>
+        <p class="meta">{fmt(post.data.date)} · {post.data.series}</p>
+        <p class="preview">{post.data.description}</p>
+        <span class="fold-hint"><span class="more">더보기 ▾</span><span class="less">접기 ▴</span></span>
+      </summary>
+      <div class="fold-body">
+        <Content />
+        <p><a href={`/blog/${post.id}/`}>이 글의 단독 페이지 →</a></p>
+      </div>
+    </details>
+  ))}
+
+  <div class="mix-line">
+    16년차 믹스 엔지니어에게 곡을 맡기고 싶다면 → <a href={SITE.links.mix}>믹스 의뢰하기</a>
   </div>
 </Base>
