@@ -1,0 +1,20 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../config';
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date);
+const fmt = (d: Date) => d.toISOString().slice(0, 10);
+---
+<Base title="블로그" description={`${SITE.series} — ${SITE.author}의 글 목록`}>
+  <h1>블로그</h1>
+  <p>시리즈: {SITE.series}</p>
+  <ul class="post-list">
+    {posts.map((p) => (
+      <li>
+        <a href={`/blog/${p.id}/`}>{p.data.title}</a>
+        <div class="meta">{fmt(p.data.date)}</div>
+        <p>{p.data.description}</p>
+      </li>
+    ))}
+  </ul>
+</Base>

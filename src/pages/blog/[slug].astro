@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../config';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.date.toISOString(),
+  inLanguage: 'ko',
+  author: { '@type': 'Person', name: '김승재', alternateName: 'Jay', url: `${SITE.url}/about` },
+  publisher: { '@type': 'Person', name: '김승재', url: SITE.url },
+  mainEntityOfPage: `${SITE.url}/blog/${post.id}/`,
+};
+---
+<Base title={post.data.title} description={post.data.description} ogType="article" schema={articleSchema}>
+  <article>
+    <h1>{post.data.title}</h1>
+    <p class="meta" style="color: var(--muted); font-size: .9rem;">
+      {post.data.date.toISOString().slice(0, 10)} · {post.data.series}
+    </p>
+    <Content />
+    <div class="footer-cta">
+      <strong>{SITE.author}</strong> — 16년차 믹스 엔지니어.<br />
+      믹스가 필요하다면 → <a href="/mix">믹스 서비스 보기</a>
+    </div>
+  </article>
+</Base>
