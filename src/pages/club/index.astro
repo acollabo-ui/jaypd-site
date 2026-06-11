@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const club = (await getCollection('club')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="김승재 인증클럽" description="제가 직접 일해본 사람들을 소개합니다.">
+  <h1>김승재 인증클럽</h1>
+  <p class="meta">제가 직접 일해본 사람들을 소개합니다</p>
+
+  <div class="club-grid">
+    {club.map((m) => (
+      <a class="club-card" href={`/club/${m.id}/`}>
+        <div class="cover">
+          <span>{m.data.name}<br />(사진 준비 중)</span>
+          {m.data.photo && <img src={m.data.photo} alt={m.data.name} onerror="this.remove()" />}
+        </div>
+        <div class="name">{m.data.name}</div>
+        <div class="role">{m.data.role}</div>
+      </a>
+    ))}
+  </div>
+</Base>

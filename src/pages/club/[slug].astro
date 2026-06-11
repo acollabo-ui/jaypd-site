@@ -1,0 +1,24 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const club = await getCollection('club');
+  return club.map((m) => ({ params: { slug: m.id }, props: { m } }));
+}
+const { m } = Astro.props;
+const { Content } = await render(m);
+---
+<Base title={m.data.name} description={`김승재 인증클럽 — ${m.data.name}`}>
+  <article>
+    <div class="cover" style="max-width: 320px;">
+      <span>{m.data.name}<br />(사진 준비 중)</span>
+      {m.data.photo && <img src={m.data.photo} alt={m.data.name} onerror="this.remove()" />}
+    </div>
+    <h1 style="margin-top: 0.6em;">{m.data.name}</h1>
+    <p class="meta">{m.data.role} · 김승재 인증클럽</p>
+    <Content />
+    <a class="insta-link" href={m.data.instagram}>→ {m.data.name}의 인스타그램</a>
+    <div class="mix-line"><a href="/club">← 인증클럽 전체 보기</a></div>
+  </article>
+</Base>
