@@ -1,29 +1,64 @@
 ---
 import Base from '../layouts/Base.astro';
 import { SITE } from '../config';
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date);
-const [latest, ...rest] = posts;
-const { Content } = await render(latest);
-const fmt = (d: Date) => d.toISOString().slice(0, 10);
+const club = (await getCollection('club')).sort((a, b) => a.data.order - b.data.order);
+
+// ① 디스코그라피 — 앨범커버. 이미지를 /public/images/discography/에 넣고 아래 배열을 채우면 된다.
+const discography = [
+  { src: '/images/discography/01.jpg', alt: '앨범커버 1' },
+  { src: '/images/discography/02.jpg', alt: '앨범커버 2' },
+  { src: '/images/discography/03.jpg', alt: '앨범커버 3' },
+  { src: '/images/discography/04.jpg', alt: '앨범커버 4' },
+  { src: '/images/discography/05.jpg', alt: '앨범커버 5' },
+  { src: '/images/discography/06.jpg', alt: '앨범커버 6' },
+];
 ---
 <Base>
-  <article>
-    <h1><a href={`/blog/${latest.id}/`} style="color: var(--ink);">{latest.data.title}</a></h1>
-    <p class="meta">{fmt(latest.data.date)} · {latest.data.series}</p>
-    <Content />
-    <div class="mix-line">
-      16년차 믹스 엔지니어에게 곡을 맡기고 싶다면 → <a href={SITE.links.mix}>믹스 의뢰하기</a>
-    </div>
-  </article>
+  <!-- ① 디스코그라피 -->
+  <p class="section-label">디스코그라피</p>
+  <div class="grid-covers">
+    {discography.map((d) => (
+      <div class="cover">
+        <span>{d.alt}<br />(이미지 준비 중)</span>
+        <img src={d.src} alt={d.alt} onerror="this.remove()" />
+      </div>
+    ))}
+  </div>
 
-  <hr />
+  <!-- ② 블로그 — 이미지 클릭 시 글로 이동 -->
+  <p class="section-label">블로그</p>
+  <div class="grid-cards">
+    {posts.slice(0, 6).map((p) => (
+      <a class="card" href={`/blog/${p.id}/`}>
+        <div class="thumb">
+          <span>대표 이미지<br />(준비 중)</span>
+          {p.data.cover && <img src={p.data.cover} alt={p.data.title} onerror="this.remove()" />}
+        </div>
+        <h3>{p.data.title}</h3>
+      </a>
+    ))}
+  </div>
 
-  {rest.slice(0, 10).map((p) => (
-    <div class="post-line">
-      <a href={`/blog/${p.id}/`}>{p.data.title}</a>
-      <time datetime={fmt(p.data.date)}>{fmt(p.data.date)}</time>
-    </div>
-  ))}
+  <!-- ③ 김승재 인증클럽 미리보기 -->
+  <p class="section-label">김승재 인증클럽 — 직접 일해본 사람들</p>
+  <div class="club-grid">
+    {club.slice(0, 3).map((m) => (
+      <a class="club-card" href={`/club/${m.id}/`}>
+        <div class="cover">
+          <span>{m.data.name}<br />(사진 준비 중)</span>
+          {m.data.photo && <img src={m.data.photo} alt={m.data.name} onerror="this.remove()" />}
+        </div>
+        <div class="name">{m.data.name}</div>
+        <div class="role">{m.data.role}</div>
+      </a>
+    ))}
+  </div>
+  <p><a href="/club">전체 보기 →</a></p>
+
+  <div class="mix-line">
+    16년차 믹스 엔지니어에게 곡을 맡기고 싶다면 → <a href={SITE.links.mix}>믹스 의뢰하기</a>
+  </div>
 </Base>
