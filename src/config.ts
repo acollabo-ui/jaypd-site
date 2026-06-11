@@ -9,7 +9,7 @@ export const SITE = {
   email: 'a_collabo@panicbutton.co.kr',
   // TODO(승재): 실제 링크 확인 후 교체
   links: {
-    youtube: 'https://www.youtube.com/@TODO-꼰대레코드',
+    youtube: 'https://www.youtube.com/@GGondae_therecord',
     instagram: 'https://www.instagram.com/TODO',
     melonCredit: 'https://www.melon.com/TODO',
     mix: 'https://suengjaesmix.netlify.app/', // 믹스+컨설팅 의뢰 (외부)
