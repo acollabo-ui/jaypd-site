@@ -1,0 +1,94 @@
+---
+import { SITE } from '../config';
+interface Props {
+  title?: string;
+  description?: string;
+  ogType?: string;
+  schema?: object | object[];
+}
+const { title, description = SITE.description, ogType = 'website', schema } = Astro.props;
+const pageTitle = title ? `${title} — ${SITE.title}` : SITE.title;
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+---
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={description} />
+  <meta name="author" content={SITE.author} />
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" type="application/rss+xml" title={SITE.title} href="/rss.xml" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:site_name" content={SITE.title} />
+  <meta property="og:locale" content="ko_KR" />
+  {schemas.map((s) => (
+    <script type="application/ld+json" set:html={JSON.stringify(s)} />
+  ))}
+  <style is:global>
+    :root {
+      --text: #1a1a1a; --muted: #666; --line: #e5e5e5;
+      --accent: #0a5cff; --bg: #ffffff; --maxw: 42rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: var(--text); background: var(--bg);
+      font-family: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo',
+        'Malgun Gothic', system-ui, sans-serif;
+      line-height: 1.75; font-size: 1.05rem;
+      -webkit-font-smoothing: antialiased;
+    }
+    main, header.site, footer.site { max-width: var(--maxw); margin: 0 auto; padding: 0 1.25rem; }
+    header.site { display: flex; align-items: center; justify-content: space-between; padding-top: 1.5rem; padding-bottom: 1.5rem; }
+    header.site .logo { font-weight: 800; text-decoration: none; color: var(--text); font-size: 1.1rem; }
+    header.site nav a { color: var(--muted); text-decoration: none; margin-left: 1.1rem; font-size: .95rem; }
+    header.site nav a:hover, header.site nav a[aria-current="page"] { color: var(--text); }
+    header.site nav a.cta { color: var(--accent); font-weight: 700; }
+    h1 { font-size: 1.85rem; line-height: 1.35; letter-spacing: -0.02em; }
+    h2 { font-size: 1.3rem; margin-top: 2.5rem; letter-spacing: -0.01em; }
+    a { color: var(--accent); }
+    main { padding-bottom: 4rem; }
+    footer.site { border-top: 1px solid var(--line); padding-top: 1.5rem; padding-bottom: 3rem; color: var(--muted); font-size: .9rem; }
+    .post-list { list-style: none; padding: 0; }
+    .post-list li { padding: 1rem 0; border-bottom: 1px solid var(--line); }
+    .post-list a { font-weight: 700; color: var(--text); text-decoration: none; font-size: 1.1rem; }
+    .post-list a:hover { color: var(--accent); }
+    .post-list .meta { color: var(--muted); font-size: .85rem; }
+    .post-list p { margin: .3rem 0 0; color: var(--muted); font-size: .95rem; }
+    .btn {
+      display: inline-block; background: var(--accent); color: #fff; font-weight: 700;
+      padding: .8rem 1.6rem; border-radius: .5rem; text-decoration: none;
+    }
+    .btn:hover { opacity: .9; }
+    blockquote { border-left: 3px solid var(--line); margin: 1.5rem 0; padding: .2rem 0 .2rem 1.2rem; color: var(--muted); }
+    article img { max-width: 100%; }
+    .facts { padding-left: 1.2rem; }
+    .facts li { margin: .5rem 0; }
+    .faq dt { font-weight: 700; margin-top: 1.4rem; }
+    .faq dd { margin: .4rem 0 0; color: #333; }
+    .price { font-size: 1.5rem; font-weight: 800; }
+    .footer-cta { border: 1px solid var(--line); border-radius: .6rem; padding: 1.2rem 1.4rem; margin-top: 3rem; background: #fafafa; }
+  </style>
+</head>
+<body>
+  <header class="site">
+    <a class="logo" href="/">jaypd.kr</a>
+    <nav>
+      <a href="/blog" aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}>블로그</a>
+      <a href="/about" aria-current={Astro.url.pathname === '/about' ? 'page' : undefined}>소개</a>
+      <a class="cta" href="/mix">믹스 의뢰</a>
+    </nav>
+  </header>
+  <main><slot /></main>
+  <footer class="site">
+    <p>{SITE.author} · <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+    <p><a href={SITE.links.youtube}>유튜브 꼰대레코드</a> · <a href="/rss.xml">RSS</a></p>
+  </footer>
+</body>
+</html>
