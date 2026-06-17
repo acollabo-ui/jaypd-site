@@ -6,24 +6,25 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date);
 const club = (await getCollection('club')).sort((a, b) => a.data.order - b.data.order);
 
-// ① 디스코그라피 — 앨범커버. 이미지를 /public/images/discography/에 넣고 아래 배열을 채우면 된다.
+// ① 디스코그라피 — 앨범커버. 이미지를 /public/images/discography/에 넣고 아래 배열을 채운다.
+// 순서대로 표시되며, 마우스를 올리면 caption이 보인다.
 const discography = [
-  { src: '/images/discography/01.jpg', alt: '앨범커버 1' },
-  { src: '/images/discography/02.jpg', alt: '앨범커버 2' },
-  { src: '/images/discography/03.jpg', alt: '앨범커버 3' },
-  { src: '/images/discography/04.jpg', alt: '앨범커버 4' },
-  { src: '/images/discography/05.jpg', alt: '앨범커버 5' },
-  { src: '/images/discography/06.jpg', alt: '앨범커버 6' },
+  { src: '/images/discography/0.jpg', caption: '어쿠스틱콜라보 데뷔' },
+  { src: '/images/discography/1.jpg', caption: '김필선 「마마」 — 프로듀싱, 믹싱' },
+  { src: '/images/discography/2.jpg', caption: 'Choyy — 프로듀싱, 믹싱 · 유튜브 뮤직 Daily 11위' },
+  { src: '/images/discography/3.jpg', caption: '이더 「낮과 밤의 틈에서 너를 생각해」 — 멜론 인디차트 Daily 1위' },
+  { src: '/images/discography/4.jpg', caption: "Dean 「Howlin' 404」 — 기타 참여" },
+  { src: '/images/discography/5.jpg', caption: '김필선 EP — 프로듀싱, 믹싱 · 애플뮤직 올해의 음악 100선' },
 ];
 ---
 <Base>
   <!-- ① 디스코그라피 -->
-  <p class="section-label">디스코그라피</p>
+  <p class="section-label">디스코그라피 <span class="label-note">(추후 작업기 업데이트 예정)</span></p>
   <div class="grid-covers">
     {discography.map((d) => (
-      <div class="cover">
-        <span>{d.alt}<br />(이미지 준비 중)</span>
-        <img src={d.src} alt={d.alt} onerror="this.remove()" />
+      <div class="cover" title={d.caption}>
+        <img src={d.src} alt={d.caption} loading="lazy" />
+        <span class="cover-caption">{d.caption}</span>
       </div>
     ))}
   </div>
