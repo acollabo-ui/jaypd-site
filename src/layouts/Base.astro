@@ -47,7 +47,7 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       color: var(--ink);
       background: var(--paper);
       font-family: Pretendard, -apple-system, sans-serif;
-      font-size: 18px;
+      font-size: 16px;
       line-height: 1.8;
       -webkit-font-smoothing: antialiased;
     }
@@ -71,8 +71,8 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     /* 우측 본문 */
     main { flex: 1; min-width: 0; max-width: 660px; padding: 2.5em 0 5em; }
 
-    h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.4; margin: 0 0 0.3em; }
-    h2 { font-size: 22px; font-weight: 700; margin: 2.5em 0 0.6em; }
+    h1 { font-size: 31px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.35; margin: 0 0 0.3em; }
+    h2 { font-size: 20px; font-weight: 700; margin: 2.5em 0 0.6em; }
     p { margin: 1.2em 0; }
     a { color: var(--amber); text-decoration: none; }
     a:hover { color: var(--amber-dark); }
@@ -149,7 +149,7 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     }
 
     @media (max-width: 768px) {
-      body { font-size: 17px; }
+      body { font-size: 15px; }
       .layout { flex-direction: column; gap: 0; }
       .sidebar { position: static; width: auto; padding-bottom: 1.2em; border-bottom: 1px solid var(--rule); }
       .sidebar nav a { display: inline-block; margin-right: 1.2em; }
