@@ -2,7 +2,7 @@ backend:
   name: github
   repo: acollabo-ui/jaypd-site
   branch: main
-  base_url: https://jaypd-site.pages.dev
+  base_url: https://jaypd.kr
   auth_endpoint: /api/auth
 
 media_folder: "public/images/uploads"
