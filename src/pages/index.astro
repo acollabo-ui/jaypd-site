@@ -34,10 +34,6 @@ const discography = [
   <div class="grid-cards">
     {posts.slice(0, 6).map((p) => (
       <a class="card" href={`/blog/${p.id}/`}>
-        <div class="thumb">
-          <span>대표 이미지<br />(준비 중)</span>
-          {p.data.cover && <img src={p.data.cover} alt={p.data.title} onerror="this.remove()" />}
-        </div>
         <h3>{p.data.title}</h3>
       </a>
     ))}
