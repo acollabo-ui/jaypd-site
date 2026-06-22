@@ -36,7 +36,7 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     :root {
       --ink:        #1A1A1A;
       --ink-soft:   #6B6B6B;
-      --paper:      #FFFFFF;
+      --paper:      #FAF7F0;
       --amber:      #D98E1F;
       --amber-dark: #B26F0E;
       --rule:       #E5E5E5;
@@ -45,7 +45,8 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     body {
       margin: 0;
       color: var(--ink);
-      background: var(--paper);
+      background-color: var(--paper);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='0.04'/%3E%3C/svg%3E");
       font-family: Pretendard, -apple-system, sans-serif;
       font-size: 16px;
       line-height: 1.8;
