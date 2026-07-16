@@ -3,7 +3,7 @@
 > ✅ 운영 중: **https://jaypd.kr** (백업 주소: https://jaypd-site.pages.dev)
 > GitHub: https://github.com/acollabo-ui/jaypd-site — **main에 푸시하면 Cloudflare가 자동 배포**
 > Cloudflare 계정: a_collabo@panicbutton.co.kr / 프로젝트: jaypd-site
-> 네임서버는 Cloudflare(greg / khloe.ns.cloudflare.com)로 이전 완료.
+> 네임서버는 가비아 → Cloudflare 이전 완료: `greg.ns.cloudflare.com` / `khloe.ns.cloudflare.com`
 
 ## 사이트 구조 (2026-07-16 개편)
 
