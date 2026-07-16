@@ -2,8 +2,14 @@
 import Base from '../../layouts/Base.astro';
 
 // HTML 실험물 목록 — 하나 만들 때마다 아래 배열에 한 줄씩 추가하면 된다.
-// href: 사이트 안에 올렸으면 '/tools/xxx/', 밖에 있으면 전체 URL.
-const tools: { name: string; desc: string; href: string; external?: boolean }[] = [];
+// 파일은 public/tools/이름/index.html 로 넣고, href는 '/tools/이름/'. 밖에 있으면 전체 URL + external.
+const tools: { name: string; desc: string; href: string; external?: boolean }[] = [
+  {
+    name: '나는 음악을 직업 삼아도 될까?',
+    desc: '마케팅 4P 전략으로 알아보는 아티스트 자가 진단 체크리스트',
+    href: '/tools/music-career-checklist/',
+  },
+];
 ---
 <Base title="장난감" description="직접 만들어 쓰는 음악 작업용 웹 도구와 실험물들.">
   <h1>장난감</h1>
