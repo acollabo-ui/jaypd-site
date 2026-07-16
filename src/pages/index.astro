@@ -178,27 +178,7 @@ const serviceSchema = {
     <p id="audioStatus" class="audio-status" role="status"></p>
   </div>
 
-  <!-- 포함 사항 -->
-  <p class="section-label">포함 사항</p>
-  <ul class="includes">
-    {includes.map((it) => (
-      <li class={it.caution ? 'is-caution' : ''}>
-        <span class="tick" aria-hidden="true">{it.caution ? '!' : '✓'}</span>
-        <div>
-          <h3>{it.title}{it.tag && <span class="pkg-tag">{it.tag}</span>}</h3>
-          <p>{it.body}</p>
-        </div>
-      </li>
-    ))}
-  </ul>
-
-  <p class="watch-line">
-    <a href="https://youtu.be/BFeeXk0_PR8?si=23k6tSRjX_qhnERE" target="_blank" rel="noopener">신청 전에 한번씩 봐주세요 ↗</a>
-    ·
-    <a href="https://youtu.be/rfmFJrLNHy4" target="_blank" rel="noopener">김승재 포트폴리오 (유튜브 일부공개) ↗</a>
-  </p>
-
-  <!-- 가격 -->
+  <!-- 가격 — 샘플 바로 아래에 둔다. 들어보고 바로 신청하는 동선 -->
   <p class="section-label">가격 <span class="label-note">(합리적인 프리미엄 가격 · 원하는 옵션을 선택하세요)</span></p>
   <div class="plans">
     {plans.map((pl) => (
@@ -220,6 +200,26 @@ const serviceSchema = {
     * 원하는 옵션을 눌러 폼을 작성해 주세요. 확인 후, 작업이 가능할 시 <strong>개별 결제 링크(네이버)</strong>를 안내해 드립니다.
   </p>
 
+  <!-- 포함 사항 -->
+  <p class="section-label">포함 사항</p>
+  <ul class="includes">
+    {includes.map((it) => (
+      <li class={it.caution ? 'is-caution' : ''}>
+        <span class="tick" aria-hidden="true">{it.caution ? '!' : '✓'}</span>
+        <div>
+          <h3>{it.title}{it.tag && <span class="pkg-tag">{it.tag}</span>}</h3>
+          <p>{it.body}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+
+  <p class="watch-line">
+    <a href="https://youtu.be/BFeeXk0_PR8?si=23k6tSRjX_qhnERE" target="_blank" rel="noopener">신청 전에 한번씩 봐주세요 ↗</a>
+    ·
+    <a href="https://youtu.be/rfmFJrLNHy4" target="_blank" rel="noopener">김승재 포트폴리오 (유튜브 일부공개) ↗</a>
+  </p>
+
   <!-- 후기 -->
   <p class="section-label">아티스트의 생생한 후기 <span class="label-note">(만족도 5.0 · 200곡 이상 진행)</span></p>
   <div class="reviews">
@@ -237,14 +237,13 @@ const serviceSchema = {
   .career li { padding: 0.2em 0; }
   .career .year { color: var(--amber-dark); font-weight: 700; margin-right: 0.6em; }
 
-  /* 앨범 그리드 — 6열이면 12장이 딱 2줄이라 페이지가 짧아진다 */
-  .grid-albums { grid-template-columns: repeat(6, 1fr); gap: 10px; }
-  .cover-fallback { padding: 0 4px; font-size: 11px; }
-  .grid-albums .cover-caption { font-size: 11px; padding: 6px 8px; }
-  .cover-caption strong { font-size: 11px; }
+  /* 앨범 그리드 — 홈 디스코그라피와 같은 .cover 위에 4열만 얹는다 */
+  .grid-albums { grid-template-columns: repeat(4, 1fr); }
+  .cover-fallback { padding: 0 6px; font-size: 12px; }
+  .cover-caption strong { font-size: 12px; }
   .cover-caption em { font-style: normal; color: #D9B87F; }
-  @media (max-width: 768px) { .grid-albums { grid-template-columns: repeat(4, 1fr); } }
-  @media (max-width: 480px) { .grid-albums { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 768px) { .grid-albums { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 480px) { .grid-albums { grid-template-columns: repeat(2, 1fr); } }
 
   /* Before / After 플레이어 */
   .player { border: 1px solid var(--rule); border-radius: 8px; padding: 16px; }
@@ -336,11 +335,17 @@ const serviceSchema = {
   .pay-note { color: var(--ink-soft); font-size: 13px; text-align: center; }
   .pay-note strong { color: var(--ink); }
 
-  /* 좁아지면 다시 세로 목록으로 — 카드 안은 좌(이름) 우(가격) 가로 배치 */
+  /* 폰에서도 한 줄 3분할 유지 — 카드가 좁아지니 글자와 여백만 줄인다 */
   @media (max-width: 640px) {
-    .plans { grid-template-columns: 1fr; gap: 10px; }
-    .plan { flex-direction: row; justify-content: space-between; align-items: center; gap: 1em; }
-    .plan-price { text-align: right; }
+    .plans { gap: 8px; }
+    .plan { padding: 0.9em 0.7em; gap: 0.6em; }
+    .plan-info strong { font-size: 13px; }
+    .plan-desc { font-size: 11px; }
+    .plan-price { white-space: normal; }
+    .plan-price b { font-size: 15px; }
+    .plan-price s { font-size: 11px; }
+    .plan-unit, .plan-cta { font-size: 10px; }
+    .plan-badge { left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 10px; padding: 0.1em 0.6em; }
   }
 
   /* 후기 */
