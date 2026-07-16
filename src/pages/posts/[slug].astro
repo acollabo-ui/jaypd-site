@@ -4,7 +4,7 @@ import { SITE } from '../../config';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
-  const posts = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date);
+  const posts = (await getCollection('posts')).sort((a, b) => +b.data.date - +a.data.date);
   return posts.map((post, i) => ({
     params: { slug: post.id },
     props: { post, newer: posts[i - 1] ?? null, older: posts[i + 1] ?? null },
@@ -18,16 +18,21 @@ const articleSchema = {
   headline: post.data.title,
   description: post.data.description,
   datePublished: post.data.date.toISOString(),
+  articleSection: post.data.category,
   inLanguage: 'ko',
   author: { '@type': 'Person', name: '김승재', alternateName: 'Jay', url: `${SITE.url}/about` },
   publisher: { '@type': 'Person', name: '김승재', url: SITE.url },
-  mainEntityOfPage: `${SITE.url}/blog/${post.id}/`,
+  mainEntityOfPage: `${SITE.url}/posts/${post.id}/`,
 };
 ---
 <Base title={post.data.title} description={post.data.description} ogType="article" schema={articleSchema}>
   <article>
     <h1>{post.data.title}</h1>
-    <p class="meta">{post.data.date.toISOString().slice(0, 10)} · {post.data.series}</p>
+    <p class="meta">
+      {post.data.date.toISOString().slice(0, 10)} ·
+      <a href={`/posts/?cat=${encodeURIComponent(post.data.category)}`}>{post.data.category}</a> ·
+      {post.data.series}
+    </p>
     <Content />
 
     <div class="mix-line">
@@ -35,8 +40,8 @@ const articleSchema = {
     </div>
 
     <nav class="post-nav">
-      <span>{older && <a href={`/blog/${older.id}/`}>← {older.data.title}</a>}</span>
-      <span>{newer && <a href={`/blog/${newer.id}/`}>{newer.data.title} →</a>}</span>
+      <span>{older && <a href={`/posts/${older.id}/`}>← {older.data.title}</a>}</span>
+      <span>{newer && <a href={`/posts/${newer.id}/`}>{newer.data.title} →</a>}</span>
     </nav>
   </article>
 </Base>

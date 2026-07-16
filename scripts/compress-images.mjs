@@ -4,9 +4,11 @@
 // - JPG/PNG/WebP 화질 80 (원본보다 커지면 원본 유지)
 import { readdir, readFile, writeFile, stat } from 'node:fs/promises';
 import { join, extname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
-const ROOT = new URL('../dist', import.meta.url).pathname;
+// URL.pathname은 윈도우에서 깨진다 (앞에 슬래시가 붙고 공백이 %20으로 남는다).
+const ROOT = fileURLToPath(new URL('../dist', import.meta.url));
 const EXTS = new Set(['.jpg', '.jpeg', '.png', '.webp']);
 const MAX_WIDTH = 1600;
 const QUALITY = 80;

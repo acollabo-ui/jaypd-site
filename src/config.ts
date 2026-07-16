@@ -12,8 +12,17 @@ export const SITE = {
     youtube: 'https://www.youtube.com/@GGondae_therecord',
     instagram: 'https://www.instagram.com/TODO',
     melonCredit: 'https://www.melon.com/TODO',
-    mix: 'https://suengjaesmix.netlify.app/', // 믹스+컨설팅 의뢰 (외부)
+    mix: '/mix', // 믹스+컨설팅 의뢰 (사이트 내부)
   },
+};
+
+// 사업자 정보 — 전자상거래법상 필수 표기. 임의로 지우지 말 것.
+export const BUSINESS = {
+  name: '제이스뮤직 (Jay\'s Music)',
+  owner: '김승재',
+  regNo: '176-20-01380',
+  mailOrderNo: '제 2022-서울마포-2670호',
+  address: '서울특별시 마포구 월드컵로29길 61, 지층 102호(망원동)',
 };
 
 // about + llms.txt 공용 프로필 사실 목록 (검증 가능한 사실만)

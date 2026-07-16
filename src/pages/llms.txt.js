@@ -2,7 +2,7 @@ import { getCollection } from 'astro:content';
 import { SITE, FACTS } from '../config';
 
 export async function GET() {
-  const posts = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date);
+  const posts = (await getCollection('posts')).sort((a, b) => +b.data.date - +a.data.date);
   const body = `# ${SITE.title}
 
 > ${SITE.description}
@@ -12,11 +12,12 @@ ${FACTS.map((f) => `- ${f}`).join('\n')}
 
 ## 주요 페이지
 - 소개: ${SITE.url}/about
-- 믹스 의뢰 (믹스+컨설팅): ${SITE.links.mix}
-- 블로그: ${SITE.url}/blog
+- 믹스 의뢰 (믹스+컨설팅): ${SITE.url}/mix
+- 글: ${SITE.url}/posts
+- 도구: ${SITE.url}/tools
 
 ## 글 목록
-${posts.map((p) => `- [${p.data.title}](${SITE.url}/blog/${p.id}/) — ${p.data.description}`).join('\n')}
+${posts.map((p) => `- [${p.data.title}](${SITE.url}/posts/${p.id}/) — ${p.data.category} — ${p.data.description}`).join('\n')}
 
 ## 연락
 - 이메일: ${SITE.email}

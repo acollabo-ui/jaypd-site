@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import { SITE } from '../config';
 
 export async function GET(context) {
-  const posts = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date);
+  const posts = (await getCollection('posts')).sort((a, b) => +b.data.date - +a.data.date);
   return rss({
     title: SITE.title,
     description: SITE.description,
@@ -12,7 +12,8 @@ export async function GET(context) {
       title: p.data.title,
       description: p.data.description,
       pubDate: p.data.date,
-      link: `/blog/${p.id}/`,
+      categories: [p.data.category],
+      link: `/posts/${p.id}/`,
     })),
   });
 }

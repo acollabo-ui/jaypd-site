@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * 발행 스크립트 — Rooms/blog/posts/ → src/content/blog/
+ * 발행 스크립트 — Rooms/blog/posts/ → src/content/posts/
  * 차단어 검출 방식: 분쟁 키워드가 하나라도 등장하면 그 글은 발행 차단 + 보고.
  * 사용: node scripts/publish.mjs [볼트 blog/posts 경로]
  */
@@ -9,7 +9,7 @@ import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const DEST = resolve(__dirname, '../src/content/blog');
+const DEST = resolve(__dirname, '../src/content/posts');
 const SRC = resolve(
   process.argv[2] ?? 'C:/Users/sueng/Desktop/2026 Docunment/Rooms/blog/posts'
 );

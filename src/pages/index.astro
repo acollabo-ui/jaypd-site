@@ -3,8 +3,7 @@ import Base from '../layouts/Base.astro';
 import { SITE } from '../config';
 import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('blog')).sort((a, b) => +b.data.date - +a.data.date);
-const club = (await getCollection('club')).sort((a, b) => a.data.order - b.data.order);
+const posts = (await getCollection('posts')).sort((a, b) => +b.data.date - +a.data.date);
 
 // ① 디스코그라피 — 앨범커버. 이미지를 /public/images/discography/에 넣고 아래 배열을 채운다.
 // 순서대로 표시되며, 마우스를 올리면 caption이 보인다.
@@ -29,31 +28,16 @@ const discography = [
     ))}
   </div>
 
-  <!-- ② 블로그 — 이미지 클릭 시 글로 이동 -->
-  <p class="section-label">블로그</p>
+  <!-- ② 글 — 제목 클릭 시 글로 이동 -->
+  <p class="section-label">글</p>
   <div class="grid-cards">
     {posts.slice(0, 6).map((p) => (
-      <a class="card" href={`/blog/${p.id}/`}>
+      <a class="card" href={`/posts/${p.id}/`}>
         <h3>{p.data.title}</h3>
       </a>
     ))}
   </div>
-
-  <!-- ③ 김승재 인증클럽 미리보기 -->
-  <p class="section-label">김승재 인증클럽 — 직접 일해본 사람들</p>
-  <div class="club-grid">
-    {club.slice(0, 3).map((m) => (
-      <a class="club-card" href={`/club/${m.id}/`}>
-        <div class="cover">
-          <span>{m.data.name}<br />(사진 준비 중)</span>
-          {m.data.photo && <img src={m.data.photo} alt={m.data.name} onerror="this.remove()" />}
-        </div>
-        <div class="name">{m.data.name}</div>
-        <div class="role">{m.data.role}</div>
-      </a>
-    ))}
-  </div>
-  <p><a href="/club">전체 보기 →</a></p>
+  <p><a href="/posts">전체 보기 →</a></p>
 
   <div class="mix-line">
     1:1로 믹스와 컨설팅을 맡기고 싶다면 → <a href={SITE.links.mix}>믹스 의뢰하기</a>

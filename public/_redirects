@@ -1,0 +1,6 @@
+# 개편 전 URL 보존 (Cloudflare Pages). 색인·외부 링크가 죽지 않게 301로 넘긴다.
+/blog/* /posts/:splat 301
+/blog /posts 301
+/review /posts?cat=%ED%8F%89%EB%A1%A0 301
+/club/* /mix 301
+/club /mix 301

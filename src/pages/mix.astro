@@ -1,0 +1,497 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE, BUSINESS } from '../config';
+
+// 참여 앨범 — 01~09는 실제 커버. 10~12는 자리만 잡아둔 요약 타일(이미지 넣으면 자동 표시).
+const albums = [
+  { src: '/images/mix/01.jpg', name: '어쿠스틱콜라보', role: '데뷔 / 차트인 8곡 작사·작편곡' },
+  { src: '/images/mix/02.jpg', name: '김필선', role: '프로듀싱 / 믹싱', note: '애플뮤직 올해의 음악' },
+  { src: '/images/mix/03.jpg', name: '유다빈', role: '프로듀싱 참여' },
+  { src: '/images/mix/04.jpg', name: '오시안', role: '프로듀싱 / 믹싱', note: '싱어게인 3 출연' },
+  { src: '/images/mix/05.jpg', name: '서자영', role: '프로듀싱', note: '릴스 1,000만뷰' },
+  { src: '/images/mix/06.jpg', name: 'Choyy', role: '프로듀싱 / 믹싱', note: '유튜브뮤직 Daily top 11' },
+  { src: '/images/mix/07.jpg', name: 'Miso', role: '기타 세션', note: '레드불 아티스트' },
+  { src: '/images/mix/08.jpg', name: 'Dean', role: '기타 세션' },
+  { src: '/images/mix/09.jpg', name: '새빛', role: '프로듀싱 / 믹싱' },
+  { src: '/images/mix/10.jpg', name: '20+@ Team', role: '& More..' },
+  { src: '/images/mix/11.jpg', name: '200+ @ Songs', role: '& More..' },
+  { src: '/images/mix/12.jpg', name: 'Updating..', role: '...' },
+];
+
+const includes = [
+  {
+    title: '믹스 전 과정 녹화 & 편집본 제공',
+    tag: '믹스+컨설팅 전용',
+    body: '자체 제작 교재 포함, 다음 번엔 직접 믹스할 수 있도록 지도',
+  },
+  {
+    title: '4P 기반 아티스트 피드백',
+    body: 'Product, Promotion, Place, Price 분석 및 1년 로드맵 제시',
+  },
+  {
+    title: '믹싱 교재 제공',
+    tag: '믹스+컨설팅 전용',
+    body: '혼자 믹스를 하실 수 있도록 (초급자 제외) 믹스에 대한 교재를 드립니다',
+  },
+  {
+    title: '온라인 진행',
+    body: '모든 과정은 온라인으로 진행합니다 / 오프라인은 구글폼 작성 시 문의 부탁드립니다',
+  },
+  {
+    title: '신청 전 주의사항',
+    caution: true,
+    body: '작업 기간 1주일 이상 소요 / 구글 폼 작성 후 진행 여부 결정',
+  },
+];
+
+const plans = [
+  {
+    name: '컨설팅',
+    desc: '4P 기반 피드백 + 1년 활동 로드맵',
+    price: '₩200,000',
+    form: 'https://forms.gle/iDdpKm1SETYRgi7QA',
+  },
+  {
+    name: '믹스',
+    desc: '믹스 & 마스터링 완성본 / 1곡',
+    price: '₩400,000',
+    form: 'https://forms.gle/BERfFuNUYUV4zaMt6',
+  },
+  {
+    name: '믹스 + 컨설팅',
+    desc: '전 과정 녹화 + 믹싱 교재 + 로드맵 (패키지 전용)',
+    price: '₩500,000',
+    was: '₩600,000',
+    unit: '/ 1곡',
+    badge: '추천 · ₩100,000 할인',
+    form: 'https://forms.gle/7k95rNwUkbxRTf2c9',
+    featured: true,
+  },
+];
+
+const reviews = [
+  {
+    body: '같이 만들어나가는 과정 속에서 하나하나 꼼꼼히 가르쳐주시고 기록해 주시면서 한단계 한단계 계단올라가듯 천천히 잘 알려주시니 음악의 깊이와 넓이를 알아갈수 있었습니다.!! 감사합니다! 다음 앨범에도 이런 합리적인 가격에 진행 하며 또 진화 하고 싶습니다!',
+    who: '신O철 님 (믹스+컨설팅)',
+  },
+  {
+    body: '혼자 음악을 만들고 믹싱을 하다보면 막히는 듯한 느낌이 들 때가 많은데 다시 길을 보여주는 좋은 강의와 피드백 인것 같아요 제작 비용 절감과 좋은 퀄리티 다 잡도록 계속 복습하면서 성장해 나갈게요~감사해요!',
+    who: '김O물 님 (믹스+컨설팅)',
+  },
+  {
+    body: '믹싱에 관한 궁금증이 많았지만 잘 알지 못했던 부분을 보다 직관적으로 예시와 수치를 통해 알려주셔서 이해하면서 배울 수 있어서 좋았어요! 실제 함께 작업하시면서 녹화해주셔서 놓치는 부분 없이 배울 수 있었어요! 그리고 음악을 한다는 게 아무래도 방향이 안 잡힐 때가 많은데 컨설팅을 통해 도움을 많이 받았어요. 아티스트로서, 프로듀서로서 경험하셨던 것을 통해 실제로 도움이 될만한 얘기를 정말 아낌없이 해주셨어요!',
+    who: '아웃ㅇㅇㅇㅇㅇ 님 (믹스+컨설팅)',
+  },
+  {
+    body: '곡을 만들어가는 과정에서 곡에 필요한 것들을 명확하게 제시해주시고 그것들을 어떻게 하면 만들 수 있는지 많은 도움을 주셨습니다. 믹싱을 하면서 제가 잘 캐치하지 못한 부분들까지 꼼꼼히 피드백 해주셔서 유의미한 결과물을 만들어낼 수 있었습니다. 너무 감사합니다!!',
+    who: '코스ㅇㅇㅇ 님 (프로듀싱+믹스)',
+  },
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: BUSINESS.name,
+  description:
+    '프리미엄 믹스 & 마스터링, 1:1 아티스트 컨설팅. 믹싱 전 과정 녹화 및 교재 제공, 아티스트 활동 로드맵 컨설팅.',
+  founder: { '@type': 'Person', name: '김승재', jobTitle: '프로듀서 / 믹스 엔지니어' },
+  url: `${SITE.url}/mix`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '월드컵로29길 61, 지층 102호',
+    addressLocality: '마포구',
+    addressRegion: '서울특별시',
+    addressCountry: 'KR',
+  },
+  priceRange: '₩200,000 ~ ₩500,000',
+  makesOffer: [
+    { '@type': 'Offer', name: '1:1 아티스트 컨설팅', price: '200000', priceCurrency: 'KRW' },
+    { '@type': 'Offer', name: '믹스 & 마스터링 (1곡)', price: '400000', priceCurrency: 'KRW' },
+    { '@type': 'Offer', name: '믹스 + 컨설팅 패키지 (1곡)', price: '500000', priceCurrency: 'KRW' },
+  ],
+  sameAs: [SITE.links.youtube],
+};
+---
+<Base
+  title="믹스 의뢰"
+  description="200곡 이상 프로듀싱·믹싱 경험. 어쿠스틱콜라보 출신, 애플뮤직 올해의 음악 프로듀서 김승재 (Jay)의 프리미엄 믹스 & 1:1 아티스트 컨설팅. 믹싱 전 과정 녹화와 믹싱 교재, 아티스트 활동 로드맵까지 제공합니다."
+  schema={serviceSchema}
+>
+  <h1>믹스 & 1:1 아티스트 컨설팅</h1>
+  <p class="meta">{SITE.author} · 200곡 이상 제작 경험</p>
+
+  <p>
+    당신의 귀가 정답입니다. 당신만의 정답을 찾을 수 있도록 도와드립니다.
+    저는 아티스트로, 믹스엔지니어로, 제작자로도 유의미한 성적이 생겼습니다.
+    <strong>음악을 직업삼는 것에 도움을 드릴 수 있습니다.</strong>
+  </p>
+
+  <ul class="career">
+    <li><span class="year">2010</span> 어쿠스틱콜라보 데뷔 차트인 8곡 작사작편곡 프로듀싱</li>
+    <li><span class="year">2017</span> 소니 ATV 소속 작곡가, 기타 세션</li>
+    <li><span class="year">2018</span> 빌리빈 Producer로 애플뮤직 올해의 음악, 유튜브 데일리 11위 등의 아티스트 20팀 이상 프로듀싱</li>
+  </ul>
+
+  <!-- 참여 앨범 -->
+  <p class="section-label">참여 앨범 <span class="label-note">(마우스를 올리면 상세 정보가 보입니다)</span></p>
+  <div class="grid-covers grid-albums">
+    {albums.map((al) => (
+      <div class="cover">
+        <span class="cover-fallback">{al.name}</span>
+        <img src={al.src} alt={`${al.name} — ${al.role}`} loading="lazy" onerror="this.remove()" />
+        <span class="cover-caption">
+          <strong>{al.name}</strong><br />{al.role}
+          {al.note && <><br /><em>{al.note}</em></>}
+        </span>
+      </div>
+    ))}
+  </div>
+
+  <!-- Before / After 플레이어 -->
+  <p class="section-label">믹스 샘플 · Before / After <span class="label-note">(샘플을 골라 믹스 전후를 비교해보세요)</span></p>
+  <div class="player">
+    <div class="sample-btns">
+      <button class="sample-btn is-on" data-idx="0">Sample 1</button>
+      <button class="sample-btn" data-idx="1">Sample 2</button>
+      <button class="sample-btn" data-idx="2">Sample 3</button>
+    </div>
+
+    <div class="player-row">
+      <button id="playBtn" class="play-btn" aria-label="재생">
+        <svg class="icon-play" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+        <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><path d="M6 5h4v14H6zM14 5h4v14h-4z" /></svg>
+      </button>
+
+      <div class="progress-wrap">
+        <div id="progressTrack" class="progress-track" role="slider" tabindex="0"
+             aria-label="재생 위치" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+        <div class="times"><span id="curTime">0:00</span><span id="durTime">0:00</span></div>
+      </div>
+
+      <div class="ba-toggle" role="group" aria-label="Before / After 전환">
+        <button class="ba-btn is-on" data-mode="before">Before</button>
+        <button class="ba-btn" data-mode="after">After</button>
+      </div>
+    </div>
+    <p id="audioStatus" class="audio-status" role="status"></p>
+  </div>
+
+  <!-- 포함 사항 -->
+  <p class="section-label">포함 사항</p>
+  <ul class="includes">
+    {includes.map((it) => (
+      <li class={it.caution ? 'is-caution' : ''}>
+        <span class="tick" aria-hidden="true">{it.caution ? '!' : '✓'}</span>
+        <div>
+          <h3>{it.title}{it.tag && <span class="pkg-tag">{it.tag}</span>}</h3>
+          <p>{it.body}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+
+  <p class="watch-line">
+    <a href="https://youtu.be/BFeeXk0_PR8?si=23k6tSRjX_qhnERE" target="_blank" rel="noopener">신청 전에 한번씩 봐주세요 ↗</a>
+    ·
+    <a href="https://youtu.be/rfmFJrLNHy4" target="_blank" rel="noopener">김승재 포트폴리오 (유튜브 일부공개) ↗</a>
+  </p>
+
+  <!-- 가격 -->
+  <p class="section-label">가격 <span class="label-note">(합리적인 프리미엄 가격 · 원하는 옵션을 선택하세요)</span></p>
+  <div class="plans">
+    {plans.map((pl) => (
+      <a class={`plan${pl.featured ? ' is-featured' : ''}`} href={pl.form} target="_blank" rel="noopener">
+        {pl.badge && <span class="plan-badge">{pl.badge}</span>}
+        <span class="plan-info">
+          <strong>{pl.name}</strong>
+          <span class="plan-desc">{pl.desc}</span>
+        </span>
+        <span class="plan-price">
+          {pl.was && <s>{pl.was}</s>}
+          <b>{pl.price}{pl.unit && <span class="plan-unit"> {pl.unit}</span>}</b>
+          <span class="plan-cta">신청 폼 작성 ↗</span>
+        </span>
+      </a>
+    ))}
+  </div>
+  <p class="pay-note">
+    * 원하는 옵션을 눌러 폼을 작성해 주세요. 확인 후, 작업이 가능할 시 <strong>개별 결제 링크(네이버)</strong>를 안내해 드립니다.
+  </p>
+
+  <!-- 후기 -->
+  <p class="section-label">아티스트의 생생한 후기 <span class="label-note">(만족도 5.0 · 200곡 이상 진행)</span></p>
+  <div class="reviews">
+    {reviews.map((r) => (
+      <figure class="review">
+        <blockquote>{r.body}</blockquote>
+        <figcaption>— {r.who}</figcaption>
+      </figure>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .career { list-style: none; padding: 0; margin: 1.5em 0; color: var(--ink-soft); font-size: 15px; }
+  .career li { padding: 0.2em 0; }
+  .career .year { color: var(--amber-dark); font-weight: 700; margin-right: 0.6em; }
+
+  /* 앨범 그리드 — 홈 디스코그라피와 같은 .cover 위에 4열만 얹는다 */
+  .grid-albums { grid-template-columns: repeat(4, 1fr); }
+  .cover-fallback { padding: 0 6px; font-size: 12px; }
+  .cover-caption strong { font-size: 12px; }
+  .cover-caption em { font-style: normal; color: #D9B87F; }
+  @media (max-width: 768px) { .grid-albums { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 480px) { .grid-albums { grid-template-columns: repeat(2, 1fr); } }
+
+  /* Before / After 플레이어 */
+  .player { border: 1px solid var(--rule); border-radius: 8px; padding: 16px; }
+  .sample-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+  .sample-btn {
+    font: inherit; font-size: 14px; cursor: pointer; padding: 0.4em 0;
+    background: none; color: var(--ink-soft);
+    border: 1px solid var(--rule); border-radius: 6px;
+    transition: color .15s, border-color .15s;
+  }
+  .sample-btn:hover { color: var(--amber-dark); border-color: var(--amber); }
+  .sample-btn.is-on { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+
+  .player-row { display: flex; align-items: center; gap: 14px; }
+  .play-btn {
+    width: 40px; height: 40px; flex-shrink: 0; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    border: 0; border-radius: 50%; background: var(--amber); color: #fff;
+    transition: background .15s;
+  }
+  .play-btn:hover { background: var(--amber-dark); }
+  .play-btn svg[hidden] { display: none; }
+
+  .progress-wrap { flex: 1; min-width: 0; }
+  .progress-track { height: 6px; border-radius: 999px; background: var(--rule); cursor: pointer; overflow: hidden; }
+  .progress-track:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+  .progress-fill { height: 100%; width: 0; background: var(--amber); }
+  .times { display: flex; justify-content: space-between; margin-top: 4px; color: var(--ink-soft); font-size: 12px; }
+
+  .ba-toggle { display: grid; grid-template-columns: 1fr 1fr; flex-shrink: 0; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; }
+  .ba-btn {
+    font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+    padding: 0.35em 0.9em; border: 0; background: none; color: var(--ink-soft);
+    transition: background .15s, color .15s;
+  }
+  .ba-btn.is-on { background: var(--ink); color: var(--paper); }
+  .audio-status { margin: 10px 0 0; text-align: center; color: var(--ink-soft); font-size: 12px; }
+  .audio-status:empty { display: none; }
+
+  @media (max-width: 560px) {
+    .player-row { flex-wrap: wrap; }
+    .progress-wrap { order: 3; flex-basis: 100%; }
+    .ba-toggle { margin-left: auto; }
+  }
+
+  /* 포함 사항 */
+  .includes { list-style: none; padding: 0; margin: 1.2em 0; }
+  .includes li { display: flex; gap: 12px; padding: 0.7em 0; }
+  .includes h3 { font-size: 15px; font-weight: 600; margin: 0; line-height: 1.6; }
+  .includes p { margin: 0.15em 0 0; color: var(--ink-soft); font-size: 14px; }
+  .tick {
+    flex-shrink: 0; width: 20px; height: 20px; margin-top: 0.3em;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--amber); border-radius: 50%;
+    color: var(--amber-dark); font-size: 11px; font-weight: 700;
+  }
+  .includes .is-caution .tick { border-color: #C0392B; color: #C0392B; }
+  .pkg-tag {
+    margin-left: 0.5em; padding: 0.1em 0.5em; vertical-align: 1px;
+    border: 1px solid var(--amber); border-radius: 999px;
+    color: var(--amber-dark); font-size: 11px; font-weight: 500;
+  }
+  .watch-line { font-size: 14px; color: var(--ink-soft); }
+
+  /* 가격 */
+  .plans { display: flex; flex-direction: column; gap: 10px; }
+  .plan {
+    position: relative; display: flex; justify-content: space-between; align-items: center; gap: 1em;
+    padding: 1.1em 1.2em; border: 1px solid var(--rule); border-radius: 8px;
+    color: inherit; transition: border-color .15s, background .15s;
+  }
+  /* 배경이 크림톤(--paper #FAF7F0)이라 강조는 살짝 더 진한 앰버 틴트로 준다 */
+  .plan:hover { border-color: var(--amber); background: rgba(217, 142, 31, 0.05); }
+  .plan.is-featured { border-color: var(--amber); background: rgba(217, 142, 31, 0.09); }
+  .plan.is-featured:hover { border-color: var(--amber-dark); }
+  .plan-badge {
+    position: absolute; top: -0.75em; left: 1em;
+    background: var(--amber); color: #fff; font-size: 11px; font-weight: 700;
+    padding: 0.15em 0.7em; border-radius: 999px;
+  }
+  .plan-info { display: flex; flex-direction: column; }
+  .plan-info strong { font-size: 15px; color: var(--ink); }
+  .plan-desc { color: var(--ink-soft); font-size: 13px; }
+  .plan-price { text-align: right; white-space: nowrap; display: flex; flex-direction: column; }
+  .plan-price s { color: #B0B0B0; font-size: 12px; }
+  .plan-price b { font-size: 20px; color: var(--ink); }
+  .plan-unit { font-size: 12px; font-weight: 400; color: var(--ink-soft); }
+  .plan-cta { color: var(--amber); font-size: 11px; }
+  .pay-note { color: var(--ink-soft); font-size: 13px; text-align: center; }
+  .pay-note strong { color: var(--ink); }
+
+  @media (max-width: 480px) {
+    .plan { flex-direction: column; align-items: flex-start; }
+    .plan-price { text-align: left; }
+  }
+
+  /* 후기 */
+  .reviews { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .review { margin: 0; border: 1px solid var(--rule); border-radius: 8px; padding: 1.2em; }
+  .review blockquote { margin: 0; padding: 0; border: 0; color: var(--ink); font-size: 14px; line-height: 1.75; }
+  .review figcaption { margin-top: 0.8em; color: var(--ink-soft); font-size: 13px; }
+  @media (max-width: 768px) { .reviews { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  // Before / After 비교 플레이어.
+  // 두 음원을 같은 위치에서 동시에 재생해두고 뮤트만 맞바꾼다 → 전환이 즉각적이다.
+  const SAMPLES = [
+    { before: '/audio/1B.mp3', after: '/audio/1A.mp3' },
+    { before: '/audio/2B.mp3', after: '/audio/2A.mp3' },
+    { before: '/audio/3B.mp3', after: '/audio/3A.mp3' },
+  ];
+
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const playBtn = $<HTMLButtonElement>('playBtn');
+  const iconPlay = playBtn.querySelector<SVGElement>('.icon-play')!;
+  const iconPause = playBtn.querySelector<SVGElement>('.icon-pause')!;
+  const progressTrack = $<HTMLDivElement>('progressTrack');
+  const progressFill = $<HTMLDivElement>('progressFill');
+  const curTime = $<HTMLSpanElement>('curTime');
+  const durTime = $<HTMLSpanElement>('durTime');
+  const audioStatus = $<HTMLParagraphElement>('audioStatus');
+  const sampleBtns = [...document.querySelectorAll<HTMLButtonElement>('.sample-btn')];
+  const baBtns = [...document.querySelectorAll<HTMLButtonElement>('.ba-btn')];
+
+  let idx = 0;
+  let mode: 'before' | 'after' = 'before';
+  let playing = false;
+  let aBefore: HTMLAudioElement | null = null;
+  let aAfter: HTMLAudioElement | null = null;
+  // 샘플을 갈아탈 때 버려진 오디오의 이벤트가 뒤늦게 새 샘플 상태를 덮어쓰지 않게 끊는다.
+  let live: AbortController | null = null;
+
+  const active = () => (mode === 'before' ? aBefore : aAfter);
+  const idle = () => (mode === 'before' ? aAfter : aBefore);
+
+  const fmt = (s: number) => {
+    if (!isFinite(s) || s < 0) s = 0;
+    return Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+  };
+
+  function setup(el: HTMLAudioElement, signal: AbortSignal) {
+    el.preload = 'auto';
+    const on = (ev: string, fn: () => void) => el.addEventListener(ev, fn, { signal });
+    on('timeupdate', () => { if (el === active()) render(); });
+    on('loadedmetadata', () => { if (el === active()) render(); });
+    on('canplay', () => { audioStatus.textContent = ''; });
+    on('error', () => { audioStatus.textContent = '음원 파일 준비 중입니다'; });
+    on('ended', () => {
+      playing = false;
+      if (aBefore) aBefore.currentTime = 0;
+      if (aAfter) aAfter.currentTime = 0;
+      render();
+      renderPlayBtn();
+    });
+  }
+
+  function loadSample(i: number) {
+    const wasPlaying = playing;
+    live?.abort(); // 이전 샘플의 리스너를 먼저 끊고 버린다
+    [aBefore, aAfter].forEach((el) => el?.pause());
+    live = new AbortController();
+    idx = i;
+    audioStatus.textContent = '';
+    aBefore = new Audio(SAMPLES[i].before);
+    aAfter = new Audio(SAMPLES[i].after);
+    setup(aBefore, live.signal);
+    setup(aAfter, live.signal);
+    applyMute();
+    sampleBtns.forEach((b, n) => b.classList.toggle('is-on', n === i));
+    render();
+    if (wasPlaying) play();
+  }
+
+  function applyMute() {
+    const on = active(), off = idle();
+    if (on) { on.muted = false; on.volume = 1; }
+    if (off) { off.muted = true; off.volume = 0; }
+  }
+
+  function play() {
+    if (!aBefore || !aAfter) { loadSample(idx); return; }
+    idle()!.currentTime = active()!.currentTime;
+    [aBefore, aAfter].forEach((el) => el.play().catch(() => {}));
+    playing = true;
+    renderPlayBtn();
+  }
+
+  function pause() {
+    [aBefore, aAfter].forEach((el) => el?.pause());
+    playing = false;
+    renderPlayBtn();
+  }
+
+  function setMode(m: 'before' | 'after') {
+    if (m === mode) return;
+    const from = active();
+    mode = m;
+    const to = active();
+    baBtns.forEach((b) => b.classList.toggle('is-on', b.dataset.mode === mode));
+    if (!from || !to) return;
+    // 매번 seek하면 순간 끊기므로, 드리프트가 생겼을 때만 위치를 다시 맞춘다.
+    if (Math.abs(to.currentTime - from.currentTime) > 0.05) to.currentTime = from.currentTime;
+    applyMute();
+    if (playing && to.paused) to.play().catch(() => {});
+    render();
+  }
+
+  function render() {
+    const el = active();
+    const dur = el && isFinite(el.duration) ? el.duration : 0;
+    const cur = el ? el.currentTime : 0;
+    const pct = dur ? (cur / dur) * 100 : 0;
+    progressFill.style.width = pct + '%';
+    progressTrack.setAttribute('aria-valuenow', String(Math.round(pct)));
+    curTime.textContent = fmt(cur);
+    durTime.textContent = fmt(dur);
+  }
+
+  function renderPlayBtn() {
+    iconPlay.hidden = playing;
+    iconPause.hidden = !playing;
+    playBtn.setAttribute('aria-label', playing ? '일시정지' : '재생');
+  }
+
+  function seekTo(ratio: number) {
+    const el = active();
+    if (!el || !isFinite(el.duration)) return;
+    const t = Math.min(1, Math.max(0, ratio)) * el.duration;
+    [aBefore, aAfter].forEach((a) => { if (a) a.currentTime = t; });
+    render();
+  }
+
+  playBtn.addEventListener('click', () => (playing ? pause() : play()));
+  sampleBtns.forEach((b) => b.addEventListener('click', () => loadSample(Number(b.dataset.idx))));
+  baBtns.forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode as 'before' | 'after')));
+  progressTrack.addEventListener('click', (e) => {
+    const r = progressTrack.getBoundingClientRect();
+    seekTo((e.clientX - r.left) / r.width);
+  });
+  progressTrack.addEventListener('keydown', (e) => {
+    const el = active();
+    if (!el || !isFinite(el.duration)) return;
+    if (e.key === 'ArrowRight') seekTo((el.currentTime + 5) / el.duration);
+    else if (e.key === 'ArrowLeft') seekTo((el.currentTime - 5) / el.duration);
+    else return;
+    e.preventDefault();
+  });
+
+  loadSample(0);
+</script>

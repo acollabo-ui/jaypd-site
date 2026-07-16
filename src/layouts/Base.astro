@@ -1,5 +1,5 @@
 ---
-import { SITE } from '../config';
+import { SITE, BUSINESS } from '../config';
 interface Props {
   title?: string;
   description?: string;
@@ -53,6 +53,21 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       -webkit-font-smoothing: antialiased;
     }
     .layout { display: flex; max-width: 1000px; margin: 0 auto; gap: 56px; padding: 0 20px; }
+    .nav-ext::after { content: ' ↗'; color: var(--ink-soft); font-size: 12px; }
+
+    /* 하단 푸터 — 소개·연락처·사업자 정보 (전자상거래법상 필수 표기) */
+    .site-footer { border-top: 1px solid var(--rule); margin-top: 4em; }
+    .site-footer .footer-inner {
+      max-width: 1000px; margin: 0 auto; padding: 2.5em 20px 4em;
+      display: flex; justify-content: space-between; gap: 2.5em; flex-wrap: wrap;
+      color: var(--ink-soft); font-size: 13px; line-height: 1.7;
+    }
+    .site-footer a { color: var(--ink-soft); }
+    .site-footer a:hover { color: var(--amber-dark); }
+    .site-footer .footer-links a { margin-right: 1.2em; }
+    .site-footer .biz-name { color: var(--ink); font-weight: 600; }
+    .site-footer .biz p { margin: 0; }
+    .site-footer .copyright { margin-top: 0.8em; color: #B0B0B0; }
 
     /* 좌측 사이드바 */
     .sidebar {
@@ -65,9 +80,6 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     .sidebar .tagline { margin: 0.4em 0 1.5em; color: var(--ink-soft); font-size: 13px; line-height: 1.6; }
     .sidebar nav a { display: block; color: var(--ink); font-size: 16px; padding: 0.25em 0; }
     .sidebar nav a:hover { color: var(--amber-dark); }
-    .sidebar .side-links { margin-top: 2em; padding-top: 1.2em; border-top: 1px solid var(--rule); font-size: 13px; }
-    .sidebar .side-links a { display: block; color: var(--ink-soft); padding: 0.15em 0; }
-    .sidebar .side-links a:hover { color: var(--amber-dark); }
 
     /* 우측 본문 */
     main { flex: 1; min-width: 0; max-width: 660px; padding: 2.5em 0 5em; }
@@ -122,31 +134,8 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     .card h3 { font-size: 16px; font-weight: 600; margin: 0.5em 0 0; line-height: 1.5; color: var(--ink); }
     .card:hover h3 { color: var(--amber-dark); }
 
-    /* 블로그 접기/펴기 (네이버 블로그식) */
-    details.post-fold { border-bottom: 1px solid var(--rule); padding: 1.2em 0; }
-    details.post-fold summary { list-style: none; cursor: pointer; }
-    details.post-fold summary::-webkit-details-marker { display: none; }
-    details.post-fold summary h2 { font-size: 19px; font-weight: 700; margin: 0; line-height: 1.5; }
-    details.post-fold summary .meta { margin: 0.2em 0 0.4em; }
-    details.post-fold summary .preview {
-      color: var(--ink-soft); margin: 0; font-size: 16px;
-      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-    }
-    details.post-fold summary .fold-hint { color: var(--amber); font-size: 14px; }
-    details.post-fold[open] summary .fold-hint .more { display: none; }
-    details.post-fold:not([open]) summary .fold-hint .less { display: none; }
-    details.post-fold .fold-body { padding-top: 0.5em; }
-
-    /* 인증클럽 */
-    .club-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .club-card { display: block; color: inherit; }
-    .club-card .name { font-size: 16px; font-weight: 600; margin-top: 0.4em; color: var(--ink); }
-    .club-card .role { font-size: 13px; color: var(--ink-soft); }
-    .club-card:hover .name { color: var(--amber-dark); }
-    .insta-link { display: inline-block; font-weight: 700; margin-top: 1em; }
-
     @media (max-width: 768px) {
-      .grid-covers, .grid-cards, .club-grid { grid-template-columns: repeat(2, 1fr); }
+      .grid-covers, .grid-cards { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 768px) {
@@ -154,8 +143,8 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       .layout { flex-direction: column; gap: 0; }
       .sidebar { position: static; width: auto; padding-bottom: 1.2em; border-bottom: 1px solid var(--rule); }
       .sidebar nav a { display: inline-block; margin-right: 1.2em; }
-      .sidebar .side-links { display: none; }
       main { padding-top: 1.5em; }
+      .site-footer .footer-inner { flex-direction: column; gap: 1.5em; padding-bottom: 3em; }
     }
   </style>
 </head>
@@ -165,19 +154,31 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       <a class="logo" href="/">김승재<span class="dot">.</span></a>
       <p class="tagline">프로듀서 김승재 (Jay)<br />음악이 막힐 때 찾는 16년차 프로듀서</p>
       <nav>
-        <a href="/">홈</a>
-        <a href="/blog">블로그</a>
-        <a href="/review">평론</a>
-        <a href="/club">김승재인증클럽</a>
+        <a href="/mix">믹스 의뢰</a>
+        <a href="/posts">글</a>
+        <a href="/tools">도구</a>
+        <a class="nav-ext" href={SITE.links.youtube} target="_blank" rel="noopener">유튜브</a>
       </nav>
-      <div class="side-links">
-        <a href="/about">소개</a>
-        <a href={SITE.links.youtube}>유튜브 꼰대레코드</a>
-        <a href={`mailto:${SITE.email}`}>이메일</a>
-        <a href="/rss.xml">RSS</a>
-      </div>
     </aside>
     <main><slot /></main>
   </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="/about">소개</a>
+        <a href={`mailto:${SITE.email}`}>이메일</a>
+        <a href="/rss.xml">RSS</a>
+        <a href={SITE.links.youtube} target="_blank" rel="noopener">유튜브 꼰대레코드</a>
+      </div>
+      <div class="biz">
+        <p class="biz-name">{BUSINESS.name}</p>
+        <p>대표: {BUSINESS.owner} | 사업자등록번호: {BUSINESS.regNo}</p>
+        <p>통신판매업 신고번호: {BUSINESS.mailOrderNo}</p>
+        <p>주소: {BUSINESS.address}</p>
+        <p class="copyright">© 2026 {BUSINESS.name}. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

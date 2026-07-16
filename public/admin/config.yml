@@ -9,29 +9,24 @@ media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
-  - name: "blog"
-    label: "블로그 글"
-    folder: "src/content/blog"
+  - name: "posts"
+    label: "글"
+    folder: "src/content/posts"
     create: true
     slug: "{{slug}}"
+    sortable_fields: ["date", "title"]
+    view_groups:
+      - { label: "카테고리", field: category }
     fields:
       - { label: "제목", name: "title", widget: "string" }
       - { label: "요약 (목록에 보이는 2줄)", name: "description", widget: "text" }
       - { label: "날짜", name: "date", widget: "datetime" }
+      - label: "카테고리"
+        name: "category"
+        widget: "select"
+        default: "믹싱지식"
+        options: ["믹싱지식", "평론", "소식"]
       - { label: "시리즈", name: "series", widget: "string", default: "차트인 인디 프로듀서의 음악팁" }
       - { label: "태그", name: "tags", widget: "list", default: [], required: false }
       - { label: "대표 이미지 (홈 카드용)", name: "cover", widget: "image", required: false }
       - { label: "본문", name: "body", widget: "markdown" }
-
-  - name: "club"
-    label: "김승재 인증클럽"
-    folder: "src/content/club"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "이름", name: "name", widget: "string" }
-      - { label: "사진", name: "photo", widget: "image", required: false }
-      - { label: "인스타그램 주소", name: "instagram", widget: "string" }
-      - { label: "역할 (예: 싱어송라이터)", name: "role", widget: "string", required: false }
-      - { label: "정렬 순서 (작을수록 앞)", name: "order", widget: "number", default: 99 }
-      - { label: "소개 글", name: "body", widget: "markdown" }

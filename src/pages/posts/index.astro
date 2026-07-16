@@ -1,0 +1,102 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../config';
+import { CATEGORIES } from '../../content.config';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts')).sort((a, b) => +b.data.date - +a.data.date);
+const fmt = (d: Date) => d.toISOString().slice(0, 10);
+
+// 글이 하나도 없는 카테고리는 탭에 띄우지 않는다.
+const used = CATEGORIES.filter((c) => posts.some((p) => p.data.category === c));
+---
+<Base title="글" description={`${SITE.author}의 글 — 믹싱지식 · 평론 · 소식`}>
+  <h1>글</h1>
+  <p class="meta">{SITE.series}</p>
+
+  <div class="cat-tabs">
+    <button class="cat-tab is-on" data-cat="전체">전체 <span class="cat-count">{posts.length}</span></button>
+    {used.map((c) => (
+      <button class="cat-tab" data-cat={c}>
+        {c} <span class="cat-count">{posts.filter((p) => p.data.category === c).length}</span>
+      </button>
+    ))}
+  </div>
+
+  <ul class="archive">
+    {posts.map((p) => (
+      <li class="archive-row" data-cat={p.data.category}>
+        <a href={`/posts/${p.id}/`}>{p.data.title}</a>
+        <span class="archive-meta">
+          <span class="cat-badge">{p.data.category}</span>
+          <time datetime={fmt(p.data.date)}>{fmt(p.data.date)}</time>
+        </span>
+      </li>
+    ))}
+  </ul>
+
+  <p class="archive-empty" hidden>이 카테고리에는 아직 글이 없습니다.</p>
+
+  <div class="mix-line">
+    1:1로 믹스와 컨설팅을 맡기고 싶다면 → <a href={SITE.links.mix}>믹스 의뢰하기</a>
+  </div>
+</Base>
+
+<style>
+  .cat-tabs { display: flex; flex-wrap: wrap; gap: 0.4em; margin: 1.5em 0 0.5em; }
+  .cat-tab {
+    font: inherit; font-size: 14px; cursor: pointer;
+    background: none; color: var(--ink-soft);
+    border: 1px solid var(--rule); border-radius: 999px;
+    padding: 0.3em 0.9em; transition: color .15s, border-color .15s;
+  }
+  .cat-tab:hover { color: var(--amber-dark); border-color: var(--amber); }
+  .cat-tab.is-on { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+  .cat-count { font-size: 12px; opacity: 0.6; margin-left: 0.15em; }
+
+  .archive { list-style: none; padding: 0; margin: 1.5em 0 0; }
+  .archive-row {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1em;
+    padding: 0.85em 0; border-bottom: 1px solid var(--rule);
+  }
+  .archive-row[hidden] { display: none; }
+  .archive-row a { font-size: 17px; font-weight: 600; color: var(--ink); }
+  .archive-row a:hover { color: var(--amber-dark); }
+  .archive-meta { display: flex; align-items: baseline; gap: 0.8em; white-space: nowrap; }
+  .cat-badge { font-size: 12px; color: var(--ink-soft); border: 1px solid var(--rule); border-radius: 3px; padding: 0.1em 0.5em; }
+  .archive-meta time { color: var(--ink-soft); font-size: 13px; }
+  .archive-empty { color: var(--ink-soft); }
+
+  @media (max-width: 520px) {
+    .archive-row { flex-direction: column; gap: 0.35em; }
+    .archive-meta { gap: 0.6em; }
+  }
+</style>
+
+<script>
+  // 카테고리 필터 — JS가 죽어도 목록 전체는 그대로 보인다.
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.cat-tab');
+  const rows = document.querySelectorAll<HTMLLIElement>('.archive-row');
+  const empty = document.querySelector<HTMLParagraphElement>('.archive-empty');
+
+  function apply(cat: string) {
+    let shown = 0;
+    rows.forEach((row) => {
+      const on = cat === '전체' || row.dataset.cat === cat;
+      row.hidden = !on;
+      if (on) shown++;
+    });
+    if (empty) empty.hidden = shown > 0;
+    tabs.forEach((t) => t.classList.toggle('is-on', t.dataset.cat === cat));
+    const url = new URL(location.href);
+    if (cat === '전체') url.searchParams.delete('cat');
+    else url.searchParams.set('cat', cat);
+    history.replaceState(null, '', url);
+  }
+
+  tabs.forEach((tab) => tab.addEventListener('click', () => apply(tab.dataset.cat!)));
+
+  // ?cat=평론 으로 들어오면 그 탭으로 시작 — 링크로 공유할 수 있다.
+  const initial = new URL(location.href).searchParams.get('cat');
+  if (initial && [...tabs].some((t) => t.dataset.cat === initial)) apply(initial);
+</script>
