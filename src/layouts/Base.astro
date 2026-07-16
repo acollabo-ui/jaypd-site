@@ -33,8 +33,12 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
   {schemas.map((s) => (
     <script type="application/ld+json" set:html={JSON.stringify(s)} />
   ))}
+  <script is:inline>
+    // 첫 그림이 그려지기 전에 저장된 테마를 박아 라이트→다크 깜빡임을 없앤다.
+    if (localStorage.getItem('theme') === 'dark') document.documentElement.dataset.theme = 'dark';
+  </script>
   <style is:global>
-    /* jaypd.kr — 좌측 메뉴 + 우측 본문. 색 3개, 장식 없음. */
+    /* jaypd.kr — 상단 메뉴 + 본문. 색 3개, 장식 없음. */
     :root {
       --ink:        #1A1A1A;
       --ink-soft:   #6B6B6B;
@@ -42,6 +46,23 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       --amber:      #D98E1F;
       --amber-dark: #B26F0E;
       --rule:       #E5E5E5;
+      --tile:       #F2F2F2;  /* 이미지 자리 배경 */
+      --faint:      #B0B0B0;  /* 취소선·잔글씨 */
+      --caution:    #C0392B;  /* 주의 표시 */
+      color-scheme: light;
+    }
+    /* 다크모드 — 종이 톤을 뒤집은 따뜻한 어두움. 앰버는 어두운 배경에서 한 단계 밝게. */
+    :root[data-theme='dark'] {
+      --ink:        #EAE6DE;
+      --ink-soft:   #9C968A;
+      --paper:      #1B1917;
+      --amber:      #E09B2D;
+      --amber-dark: #F0B25A; /* 다크에선 호버가 밝아지는 쪽이 자연스럽다 */
+      --rule:       #37332C;
+      --tile:       #2A2620;
+      --faint:      #6E685E;
+      --caution:    #E06555;
+      color-scheme: dark;
     }
     * { box-sizing: border-box; }
     body {
@@ -53,6 +74,7 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       font-size: 16px;
       line-height: 1.8;
       -webkit-font-smoothing: antialiased;
+      transition: background-color .2s ease, color .2s ease;
     }
     .layout { max-width: 760px; margin: 0 auto; padding: 0 20px; }
     .nav-ext::after { content: ' ↗'; color: var(--ink-soft); font-size: 12px; }
@@ -69,7 +91,7 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     .site-footer .footer-links a { margin-right: 1.2em; }
     .site-footer .biz-name { color: var(--ink); font-weight: 600; }
     .site-footer .biz p { margin: 0; }
-    .site-footer .copyright { margin-top: 0.8em; color: #B0B0B0; }
+    .site-footer .copyright { margin-top: 0.8em; color: var(--faint); }
 
     /* 상단 헤더 — 로고 왼쪽, 메뉴 오른쪽 */
     .site-header { border-bottom: 1px solid var(--rule); }
@@ -80,11 +102,23 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     .site-header .logo { font-size: 21px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; white-space: nowrap; }
     .site-header .logo .dot { color: var(--amber); }
     .site-header .tagline { margin: 0.25em 0 0; color: var(--ink-soft); font-size: 13px; line-height: 1.6; }
-    .site-header nav { display: flex; gap: 1.4em; flex-wrap: wrap; }
+    .site-header nav { display: flex; align-items: center; gap: 1.4em; flex-wrap: wrap; }
     .site-header nav a { color: var(--ink); font-size: 15px; white-space: nowrap; }
     .site-header nav a:hover { color: var(--amber-dark); }
     /* 지금 보고 있는 메뉴에 밑줄 */
     .site-header nav a[aria-current='page'] { color: var(--amber-dark); box-shadow: inset 0 -2px 0 var(--amber); }
+
+    /* 다크모드 토글 — 라이트에선 달, 다크에선 해가 보인다 */
+    .theme-toggle {
+      width: 30px; height: 30px; flex-shrink: 0; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      background: none; border: 1px solid var(--rule); border-radius: 50%;
+      color: var(--ink-soft); transition: color .15s, border-color .15s;
+    }
+    .theme-toggle:hover { color: var(--amber-dark); border-color: var(--amber); }
+    .theme-toggle .icon-sun { display: none; }
+    :root[data-theme='dark'] .theme-toggle .icon-sun { display: block; }
+    :root[data-theme='dark'] .theme-toggle .icon-moon { display: none; }
 
     main { min-width: 0; padding: 2.5em 0 5em; }
 
@@ -115,9 +149,9 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 
     /* 홈 섹션 그리드 — 디스코그라피(정사각), 블로그 카드, 클럽 사진 */
     .section-label { font-size: 14px; color: var(--ink-soft); margin: 2.5em 0 0.8em; }
-    .section-label .label-note { color: #B0B0B0; font-size: 12px; }
+    .section-label .label-note { color: var(--faint); font-size: 12px; }
     .grid-covers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .cover { position: relative; aspect-ratio: 1; background: #F2F2F2; overflow: hidden;
+    .cover { position: relative; aspect-ratio: 1; background: var(--tile); overflow: hidden;
       display: flex; align-items: center; justify-content: center;
       color: var(--ink-soft); font-size: 13px; text-align: center; }
     .cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -132,7 +166,7 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       background: rgba(26,26,26,0.6); font-size: 11px; padding: 6px 8px; } }
     .grid-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .card { display: block; color: inherit; }
-    .card .thumb { position: relative; aspect-ratio: 16/10; background: #F2F2F2; overflow: hidden;
+    .card .thumb { position: relative; aspect-ratio: 16/10; background: var(--tile); overflow: hidden;
       display: flex; align-items: center; justify-content: center; color: var(--ink-soft); font-size: 13px; }
     .card .thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .card h3 { font-size: 16px; font-weight: 600; margin: 0.5em 0 0; line-height: 1.5; color: var(--ink); }
@@ -164,6 +198,10 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
         <a href="/posts" aria-current={path.startsWith('/posts') ? 'page' : null}>블로그</a>
         <a href="/tools" aria-current={path.startsWith('/tools') ? 'page' : null}>장난감</a>
         <a class="nav-ext" href={SITE.links.youtube} target="_blank" rel="noopener">유튜브</a>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="다크모드 켜기/끄기">
+          <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>
+          <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" /></svg>
+        </button>
       </nav>
     </div>
   </header>
@@ -189,5 +227,19 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       </div>
     </div>
   </footer>
+
+  <script>
+    // 다크모드 토글 — 선택은 localStorage에 남아 다음 방문에도 유지된다.
+    document.getElementById('themeToggle')?.addEventListener('click', () => {
+      const root = document.documentElement;
+      if (root.dataset.theme === 'dark') {
+        delete root.dataset.theme;
+        localStorage.removeItem('theme');
+      } else {
+        root.dataset.theme = 'dark';
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  </script>
 </body>
 </html>
