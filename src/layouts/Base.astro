@@ -9,6 +9,8 @@ interface Props {
 const { title, description = SITE.description, ogType = 'website', schema } = Astro.props;
 const pageTitle = title ? `${title} — ${SITE.title}` : SITE.title;
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
+// 현재 메뉴 표시용. 끝 슬래시 유무에 상관없이 맞도록 정규화한다.
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 ---
 <!doctype html>
@@ -52,7 +54,7 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       line-height: 1.8;
       -webkit-font-smoothing: antialiased;
     }
-    .layout { display: flex; max-width: 1000px; margin: 0 auto; gap: 56px; padding: 0 20px; }
+    .layout { max-width: 760px; margin: 0 auto; padding: 0 20px; }
     .nav-ext::after { content: ' ↗'; color: var(--ink-soft); font-size: 12px; }
 
     /* 하단 푸터 — 소개·연락처·사업자 정보 (전자상거래법상 필수 표기) */
@@ -69,20 +71,22 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     .site-footer .biz p { margin: 0; }
     .site-footer .copyright { margin-top: 0.8em; color: #B0B0B0; }
 
-    /* 좌측 사이드바 */
-    .sidebar {
-      width: 200px; flex-shrink: 0;
-      position: sticky; top: 0; align-self: flex-start;
-      padding: 2.5em 0 2em;
+    /* 상단 헤더 — 로고 왼쪽, 메뉴 오른쪽 */
+    .site-header { border-bottom: 1px solid var(--rule); }
+    .header-inner {
+      max-width: 760px; margin: 0 auto; padding: 1.6em 20px;
+      display: flex; align-items: baseline; justify-content: space-between; gap: 1.5em; flex-wrap: wrap;
     }
-    .sidebar .logo { font-size: 22px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
-    .sidebar .logo .dot { color: var(--amber); }
-    .sidebar .tagline { margin: 0.4em 0 1.5em; color: var(--ink-soft); font-size: 13px; line-height: 1.6; }
-    .sidebar nav a { display: block; color: var(--ink); font-size: 16px; padding: 0.25em 0; }
-    .sidebar nav a:hover { color: var(--amber-dark); }
+    .site-header .logo { font-size: 21px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; white-space: nowrap; }
+    .site-header .logo .dot { color: var(--amber); }
+    .site-header .tagline { margin: 0.25em 0 0; color: var(--ink-soft); font-size: 13px; line-height: 1.6; }
+    .site-header nav { display: flex; gap: 1.4em; flex-wrap: wrap; }
+    .site-header nav a { color: var(--ink); font-size: 15px; white-space: nowrap; }
+    .site-header nav a:hover { color: var(--amber-dark); }
+    /* 지금 보고 있는 메뉴에 밑줄 */
+    .site-header nav a[aria-current='page'] { color: var(--amber-dark); box-shadow: inset 0 -2px 0 var(--amber); }
 
-    /* 우측 본문 */
-    main { flex: 1; min-width: 0; max-width: 660px; padding: 2.5em 0 5em; }
+    main { min-width: 0; padding: 2.5em 0 5em; }
 
     h1 { font-size: 31px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.35; margin: 0 0 0.3em; }
     h2 { font-size: 20px; font-weight: 700; margin: 2.5em 0 0.6em; }
@@ -102,7 +106,7 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     .post-line time { color: var(--ink-soft); font-size: 14px; white-space: nowrap; }
     .year-label { color: var(--ink-soft); font-size: 14px; margin: 2em 0 0.4em; }
 
-    /* 글 하단 믹스 의뢰 한 줄 (외부 링크) */
+    /* 글 하단 믹스 의뢰 한 줄 */
     .mix-line { border-top: 1px solid var(--rule); padding-top: 1.5em; margin-top: 3em; }
 
     .post-nav { display: flex; justify-content: space-between; gap: 1em; margin-top: 1.5em; font-size: 16px; }
@@ -140,26 +144,31 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 
     @media (max-width: 768px) {
       body { font-size: 15px; }
-      .layout { flex-direction: column; gap: 0; }
-      .sidebar { position: static; width: auto; padding-bottom: 1.2em; border-bottom: 1px solid var(--rule); }
-      .sidebar nav a { display: inline-block; margin-right: 1.2em; }
+      /* 좁아지면 로고 아래로 메뉴가 한 줄 내려온다 */
+      .header-inner { padding: 1.2em 20px; gap: 0.8em; }
+      .site-header nav { gap: 1.1em; }
       main { padding-top: 1.5em; }
       .site-footer .footer-inner { flex-direction: column; gap: 1.5em; padding-bottom: 3em; }
     }
   </style>
 </head>
 <body>
-  <div class="layout">
-    <aside class="sidebar">
-      <a class="logo" href="/">김승재<span class="dot">.</span></a>
-      <p class="tagline">프로듀서 김승재 (Jay)<br />음악이 막힐 때 찾는 16년차 프로듀서</p>
+  <header class="site-header">
+    <div class="header-inner">
+      <div>
+        <a class="logo" href="/">김승재<span class="dot">.</span></a>
+        <p class="tagline">음악이 막힐 때 찾는 16년차 프로듀서</p>
+      </div>
       <nav>
-        <a href="/mix">믹스 의뢰</a>
-        <a href="/posts">글</a>
-        <a href="/tools">도구</a>
+        <a href="/" aria-current={path === '/' ? 'page' : null}>믹스 &amp; 컨설팅</a>
+        <a href="/posts" aria-current={path.startsWith('/posts') ? 'page' : null}>블로그</a>
+        <a href="/tools" aria-current={path.startsWith('/tools') ? 'page' : null}>장난감</a>
         <a class="nav-ext" href={SITE.links.youtube} target="_blank" rel="noopener">유튜브</a>
       </nav>
-    </aside>
+    </div>
+  </header>
+
+  <div class="layout">
     <main><slot /></main>
   </div>
 

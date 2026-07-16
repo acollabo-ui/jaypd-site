@@ -1,3 +1,7 @@
 node_modules/
 dist/
 .astro/
+
+# 이 레포는 락파일 없이 배포해 왔다. 갑자기 커밋하면 Cloudflare의 설치 방식이
+# npm install → npm ci 로 바뀌어 빌드가 깨질 수 있다. 넣으려면 배포 확인하고 넣을 것.
+package-lock.json

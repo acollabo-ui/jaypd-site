@@ -11,10 +11,10 @@ export async function GET() {
 ${FACTS.map((f) => `- ${f}`).join('\n')}
 
 ## 주요 페이지
+- 믹스 & 컨설팅 (의뢰): ${SITE.url}
+- 블로그: ${SITE.url}/posts
+- 장난감: ${SITE.url}/tools
 - 소개: ${SITE.url}/about
-- 믹스 의뢰 (믹스+컨설팅): ${SITE.url}/mix
-- 글: ${SITE.url}/posts
-- 도구: ${SITE.url}/tools
 
 ## 글 목록
 ${posts.map((p) => `- [${p.data.title}](${SITE.url}/posts/${p.id}/) — ${p.data.category} — ${p.data.description}`).join('\n')}

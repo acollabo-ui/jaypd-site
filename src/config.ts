@@ -12,7 +12,7 @@ export const SITE = {
     youtube: 'https://www.youtube.com/@GGondae_therecord',
     instagram: 'https://www.instagram.com/TODO',
     melonCredit: 'https://www.melon.com/TODO',
-    mix: '/mix', // 믹스+컨설팅 의뢰 (사이트 내부)
+    mix: '/', // 믹스+컨설팅 의뢰 — 홈이 곧 믹스 페이지다
   },
 };
 

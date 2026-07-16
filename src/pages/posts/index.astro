@@ -10,8 +10,8 @@ const fmt = (d: Date) => d.toISOString().slice(0, 10);
 // 글이 하나도 없는 카테고리는 탭에 띄우지 않는다.
 const used = CATEGORIES.filter((c) => posts.some((p) => p.data.category === c));
 ---
-<Base title="글" description={`${SITE.author}의 글 — 믹싱지식 · 평론 · 소식`}>
-  <h1>글</h1>
+<Base title="블로그" description={`${SITE.author}의 블로그 — 믹싱지식 · 평론 · 소식`}>
+  <h1>블로그</h1>
   <p class="meta">{SITE.series}</p>
 
   <div class="cat-tabs">
