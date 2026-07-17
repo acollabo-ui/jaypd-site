@@ -177,6 +177,9 @@ const serviceSchema = {
     </div>
     <p id="audioStatus" class="audio-status" role="status"></p>
   </div>
+  <p class="portfolio-line">
+    더 듣고 싶다면 → <a href="https://youtu.be/rfmFJrLNHy4" target="_blank" rel="noopener">김승재 포트폴리오 (유튜브 일부공개) ↗</a>
+  </p>
 
   <!-- 가격 — 샘플 바로 아래에 둔다. 들어보고 바로 신청하는 동선 -->
   <p class="section-label">가격 <span class="label-note">(합리적인 프리미엄 가격 · 원하는 옵션을 선택하세요)</span></p>
@@ -216,8 +219,6 @@ const serviceSchema = {
 
   <p class="watch-line">
     <a href="https://youtu.be/BFeeXk0_PR8?si=23k6tSRjX_qhnERE" target="_blank" rel="noopener">신청 전에 한번씩 봐주세요 ↗</a>
-    ·
-    <a href="https://youtu.be/rfmFJrLNHy4" target="_blank" rel="noopener">김승재 포트폴리오 (유튜브 일부공개) ↗</a>
   </p>
 
   <!-- 후기 -->
@@ -307,6 +308,8 @@ const serviceSchema = {
     color: var(--amber-dark); font-size: 11px; font-weight: 500;
   }
   .watch-line { font-size: 14px; color: var(--ink-soft); }
+  /* 샘플 밑 얇은 한 줄 — 플레이어에 바짝 붙인다 */
+  .portfolio-line { margin: 0.5em 0 0; font-size: 13px; color: var(--ink-soft); text-align: right; }
 
   /* 가격 — 한 줄 3분할. 카드 안은 위(이름·설명) 아래(가격) 세로 배치 */
   .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
