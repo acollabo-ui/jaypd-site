@@ -5,8 +5,9 @@ interface Props {
   description?: string;
   ogType?: string;
   schema?: object | object[];
+  wide?: boolean;
 }
-const { title, description = SITE.description, ogType = 'website', schema } = Astro.props;
+const { title, description = SITE.description, ogType = 'website', schema, wide = false } = Astro.props;
 const pageTitle = title ? `${title} — ${SITE.title}` : SITE.title;
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
 // 현재 메뉴 표시용. 끝 슬래시 유무에 상관없이 맞도록 정규화한다.
@@ -53,15 +54,15 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     }
     /* 다크모드 — 종이 톤을 뒤집은 따뜻한 어두움. 앰버는 어두운 배경에서 한 단계 밝게. */
     :root[data-theme='dark'] {
-      --ink:        #EAE6DE;
-      --ink-soft:   #9C968A;
-      --paper:      #1B1917;
-      --amber:      #E09B2D;
-      --amber-dark: #F0B25A; /* 다크에선 호버가 밝아지는 쪽이 자연스럽다 */
-      --rule:       #37332C;
-      --tile:       #2A2620;
-      --faint:      #6E685E;
-      --caution:    #E06555;
+      --ink:        #F4F2E9;
+      --ink-soft:   #989D93;
+      --paper:      #0A0B09;
+      --amber:      #C8FF3D;
+      --amber-dark: #C8FF3D;
+      --rule:       #2B2D28;
+      --tile:       #171915;
+      --faint:      #666B61;
+      --caution:    #FF6B4A;
       color-scheme: dark;
     }
     * { box-sizing: border-box; }
@@ -76,7 +77,9 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       -webkit-font-smoothing: antialiased;
       transition: background-color .2s ease, color .2s ease;
     }
+    html { scroll-behavior: smooth; }
     .layout { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+    .layout.layout-wide { max-width: 1160px; }
     .nav-ext::after { content: ' ↗'; color: var(--ink-soft); font-size: 12px; }
 
     /* 하단 푸터 — 소개·연락처·사업자 정보 (전자상거래법상 필수 표기) */
@@ -94,9 +97,14 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     .site-footer .copyright { margin-top: 0.8em; color: var(--faint); }
 
     /* 상단 헤더 — 로고 왼쪽, 메뉴 오른쪽 */
-    .site-header { border-bottom: 1px solid var(--rule); }
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      border-bottom: 1px solid var(--rule);
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
+      backdrop-filter: blur(16px);
+    }
     .header-inner {
-      max-width: 760px; margin: 0 auto; padding: 1.6em 20px;
+      max-width: 1160px; margin: 0 auto; padding: 1.25em 20px;
       display: flex; align-items: baseline; justify-content: space-between; gap: 1.5em; flex-wrap: wrap;
     }
     .site-header .logo { font-size: 21px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; white-space: nowrap; }
@@ -193,10 +201,10 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
         <a class="logo" href="/">김승재<span class="dot">.</span></a>
         <p class="tagline">음악이 막힐 때 찾는 16년차 프로듀서</p>
       </div>
-      <nav>
-        <a href="/" aria-current={path === '/' ? 'page' : null}>믹스 &amp; 컨설팅</a>
+      <nav aria-label="주요 메뉴">
+        <a href="/#mixing">믹싱</a>
+        <a href="/#consulting">아티스트 컨설팅</a>
         <a href="/posts" aria-current={path.startsWith('/posts') ? 'page' : null}>블로그</a>
-        <a href="/tools" aria-current={path.startsWith('/tools') ? 'page' : null}>장난감</a>
         <a class="nav-ext" href={SITE.links.youtube} target="_blank" rel="noopener">유튜브</a>
         <button id="themeToggle" class="theme-toggle" type="button" aria-label="다크모드 켜기/끄기">
           <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>
@@ -206,7 +214,7 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     </div>
   </header>
 
-  <div class="layout">
+  <div class:list={["layout", { "layout-wide": wide }]}>
     <main><slot /></main>
   </div>
 
@@ -214,6 +222,7 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     <div class="footer-inner">
       <div class="footer-links">
         <a href="/about">소개</a>
+        <a href="/tools">장난감</a>
         <a href={`mailto:${SITE.email}`}>이메일</a>
         <a href="/rss.xml">RSS</a>
         <a href={SITE.links.youtube} target="_blank" rel="noopener">유튜브 꼰대레코드</a>

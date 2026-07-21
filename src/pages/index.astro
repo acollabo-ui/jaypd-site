@@ -2,98 +2,36 @@
 import Base from '../layouts/Base.astro';
 import { SITE, BUSINESS } from '../config';
 
-// 참여 앨범 — 01~09는 실제 커버. 10~12는 자리만 잡아둔 요약 타일(이미지 넣으면 자동 표시).
 const albums = [
-  { src: '/images/mix/01.jpg', name: '어쿠스틱콜라보', role: '데뷔 / 차트인 8곡 작사·작편곡' },
-  { src: '/images/mix/02.jpg', name: '김필선', role: '프로듀싱 / 믹싱', note: '애플뮤직 올해의 음악' },
+  { src: '/images/mix/01.jpg', name: '어쿠스틱콜라보', role: '데뷔 · 차트인 8곡 작사·작편곡' },
+  { src: '/images/mix/02.jpg', name: '김필선', role: '프로듀싱 · 믹싱', note: '애플뮤직 올해의 음악' },
   { src: '/images/mix/03.jpg', name: '유다빈', role: '프로듀싱 참여' },
-  { src: '/images/mix/04.jpg', name: '오시안', role: '프로듀싱 / 믹싱', note: '싱어게인 3 출연' },
-  { src: '/images/mix/05.jpg', name: '서자영', role: '프로듀싱', note: '릴스 1,000만뷰' },
-  { src: '/images/mix/06.jpg', name: 'Choyy', role: '프로듀싱 / 믹싱', note: '유튜브뮤직 Daily top 11' },
+  { src: '/images/mix/04.jpg', name: '오시안', role: '프로듀싱 · 믹싱', note: '싱어게인 3 출연' },
+  { src: '/images/mix/05.jpg', name: '서자영', role: '프로듀싱', note: '릴스 1,000만 뷰' },
+  { src: '/images/mix/06.jpg', name: 'Choyy', role: '프로듀싱 · 믹싱', note: '유튜브뮤직 Daily Top 11' },
   { src: '/images/mix/07.jpg', name: 'Miso', role: '기타 세션', note: '레드불 아티스트' },
-  { src: '/images/mix/08.jpg', name: 'Dean', role: '기타 세션' },
-  { src: '/images/mix/09.jpg', name: '새빛', role: '프로듀싱 / 믹싱' },
-  { src: '/images/mix/10.jpg', name: '20+@ Team', role: '& More..' },
-  { src: '/images/mix/11.jpg', name: '200+ @ Songs', role: '& More..' },
-  { src: '/images/mix/12.jpg', name: 'Updating..', role: '...' },
-];
-
-const includes = [
-  {
-    title: '믹스 전 과정 녹화 & 편집본 제공',
-    tag: '믹스+컨설팅 전용',
-    body: '자체 제작 교재 포함, 다음 번엔 직접 믹스할 수 있도록 지도',
-  },
-  {
-    title: '4P 기반 아티스트 피드백',
-    body: 'Product, Promotion, Place, Price 분석 및 1년 로드맵 제시',
-  },
-  {
-    title: '믹싱 교재 제공',
-    tag: '믹스+컨설팅 전용',
-    body: '혼자 믹스를 하실 수 있도록 (초급자 제외) 믹스에 대한 교재를 드립니다',
-  },
-  {
-    title: '온라인 진행',
-    body: '모든 과정은 온라인으로 진행합니다 / 오프라인은 구글폼 작성 시 문의 부탁드립니다',
-  },
-  {
-    title: '신청 전 주의사항',
-    caution: true,
-    body: '작업 기간 1주일 이상 소요 / 구글 폼 작성 후 진행 여부 결정',
-  },
+  { src: '/images/mix/08.jpg', name: 'DEAN', role: '기타 세션' },
+  { src: '/images/mix/09.jpg', name: '새빛', role: '프로듀싱 · 믹싱' },
 ];
 
 const plans = [
-  {
-    name: '컨설팅',
-    desc: '4P 기반 피드백 + 1년 활동 로드맵',
-    price: '₩200,000',
-    form: 'https://forms.gle/iDdpKm1SETYRgi7QA',
-  },
-  {
-    name: '믹스',
-    desc: '믹스 & 마스터링 완성본 / 1곡',
-    price: '₩400,000',
-    form: 'https://forms.gle/BERfFuNUYUV4zaMt6',
-  },
-  {
-    name: '믹스 + 컨설팅',
-    desc: '전 과정 녹화 + 믹싱 교재 + 로드맵 (패키지 전용)',
-    price: '₩500,000',
-    was: '₩600,000',
-    unit: '/ 1곡',
-    badge: '추천 · ₩100,000 할인',
-    form: 'https://forms.gle/7k95rNwUkbxRTf2c9',
-    featured: true,
-  },
+  { type: 'DIRECTION', name: '아티스트 컨설팅', desc: '4P 기반 피드백과 실행 가능한 1년 활동 로드맵', detail: '1:1~4:1 · 온/오프라인 선택', price: '₩200,000', form: 'https://forms.gle/iDdpKm1SETYRgi7QA' },
+  { type: 'SOUND', name: '믹스 & 마스터링', desc: '곡의 의도를 살린 발매 가능한 완성본', detail: '1곡', price: '₩400,000', form: 'https://forms.gle/BERfFuNUYUV4zaMt6' },
+  { type: 'GROWTH', name: '믹스 + 컨설팅', desc: '좋은 결과물과 다음 곡을 직접 완성할 힘까지', detail: '녹화본 · 교재 · 1년 로드맵', price: '₩500,000', was: '₩600,000', badge: '가장 많이 선택하는 패키지', form: 'https://forms.gle/7k95rNwUkbxRTf2c9', featured: true },
 ];
 
 const reviews = [
-  {
-    body: '같이 만들어나가는 과정 속에서 하나하나 꼼꼼히 가르쳐주시고 기록해 주시면서 한단계 한단계 계단올라가듯 천천히 잘 알려주시니 음악의 깊이와 넓이를 알아갈수 있었습니다.!! 감사합니다! 다음 앨범에도 이런 합리적인 가격에 진행 하며 또 진화 하고 싶습니다!',
-    who: '신O철 님 (믹스+컨설팅)',
-  },
-  {
-    body: '혼자 음악을 만들고 믹싱을 하다보면 막히는 듯한 느낌이 들 때가 많은데 다시 길을 보여주는 좋은 강의와 피드백 인것 같아요 제작 비용 절감과 좋은 퀄리티 다 잡도록 계속 복습하면서 성장해 나갈게요~감사해요!',
-    who: '김O물 님 (믹스+컨설팅)',
-  },
-  {
-    body: '믹싱에 관한 궁금증이 많았지만 잘 알지 못했던 부분을 보다 직관적으로 예시와 수치를 통해 알려주셔서 이해하면서 배울 수 있어서 좋았어요! 실제 함께 작업하시면서 녹화해주셔서 놓치는 부분 없이 배울 수 있었어요! 그리고 음악을 한다는 게 아무래도 방향이 안 잡힐 때가 많은데 컨설팅을 통해 도움을 많이 받았어요. 아티스트로서, 프로듀서로서 경험하셨던 것을 통해 실제로 도움이 될만한 얘기를 정말 아낌없이 해주셨어요!',
-    who: '아웃ㅇㅇㅇㅇㅇ 님 (믹스+컨설팅)',
-  },
-  {
-    body: '곡을 만들어가는 과정에서 곡에 필요한 것들을 명확하게 제시해주시고 그것들을 어떻게 하면 만들 수 있는지 많은 도움을 주셨습니다. 믹싱을 하면서 제가 잘 캐치하지 못한 부분들까지 꼼꼼히 피드백 해주셔서 유의미한 결과물을 만들어낼 수 있었습니다. 너무 감사합니다!!',
-    who: '코스ㅇㅇㅇ 님 (프로듀싱+믹스)',
-  },
+  { body: '하나하나 꼼꼼히 가르쳐주시고 기록해 주시면서, 계단을 오르듯 음악의 깊이와 넓이를 알아갈 수 있었습니다.', who: '신O철 님', service: '믹스 + 컨설팅' },
+  { body: '혼자 만들고 믹싱하다 막힐 때 다시 길을 보여주는 강의와 피드백이었습니다. 제작 비용과 퀄리티를 모두 잡을 수 있었습니다.', who: '김O물 님', service: '믹스 + 컨설팅' },
+  { body: '예시와 수치를 통해 직관적으로 알려주셔서 이해하며 배울 수 있었습니다. 작업 전 과정을 다시 볼 수 있어서 좋았어요.', who: '아웃ㅇㅇㅇㅇㅇ 님', service: '믹스 + 컨설팅' },
+  { body: '곡에 필요한 것을 명확하게 제시하고 만드는 방법까지 알려주셨습니다. 꼼꼼한 피드백으로 유의미한 결과물이 나왔습니다.', who: '코스ㅇㅇㅇ 님', service: '프로듀싱 + 믹스' },
 ];
 
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
   name: BUSINESS.name,
-  description:
-    '프리미엄 믹스 & 마스터링, 1:1 아티스트 컨설팅. 믹싱 전 과정 녹화 및 교재 제공, 아티스트 활동 로드맵 컨설팅.',
+  description: '프리미엄 믹스 & 마스터링, 1:1~4:1 아티스트 컨설팅.',
   founder: { '@type': 'Person', name: '김승재', jobTitle: '프로듀서 / 믹스 엔지니어' },
   url: SITE.url,
   address: {
@@ -104,259 +42,310 @@ const serviceSchema = {
     addressCountry: 'KR',
   },
   priceRange: '₩200,000 ~ ₩500,000',
-  makesOffer: [
-    { '@type': 'Offer', name: '1:1 아티스트 컨설팅', price: '200000', priceCurrency: 'KRW' },
-    { '@type': 'Offer', name: '믹스 & 마스터링 (1곡)', price: '400000', priceCurrency: 'KRW' },
-    { '@type': 'Offer', name: '믹스 + 컨설팅 패키지 (1곡)', price: '500000', priceCurrency: 'KRW' },
-  ],
+  makesOffer: plans.map((p) => ({ '@type': 'Offer', name: p.name, price: p.price.replace(/[^0-9]/g, ''), priceCurrency: 'KRW' })),
   sameAs: [SITE.links.youtube],
 };
 ---
 <Base
-  title="믹스 & 1:1 아티스트 컨설팅"
-  description="200곡 이상 프로듀싱·믹싱 경험. 어쿠스틱콜라보 출신, 애플뮤직 올해의 음악 프로듀서 김승재 (Jay)의 프리미엄 믹스 & 1:1 아티스트 컨설팅. 믹싱 전 과정 녹화와 믹싱 교재, 아티스트 활동 로드맵까지 제공합니다."
+  wide
+  title="믹스 & 아티스트 컨설팅"
+  description="200곡 이상 제작한 16년차 프로듀서 김승재의 믹스 & 마스터링, 1:1~4:1 아티스트 컨설팅."
   schema={serviceSchema}
 >
-  <h1>믹스 & 1:1 아티스트 컨설팅</h1>
-  <p class="meta">{SITE.author} · 200곡 이상 제작 경험</p>
-
-  <p>
-    당신의 귀가 정답입니다. 당신만의 정답을 찾을 수 있도록 도와드립니다.
-    저는 아티스트로, 믹스엔지니어로, 제작자로도 유의미한 성적이 생겼습니다.
-    <strong>음악을 직업삼는 것에 도움을 드릴 수 있습니다.</strong>
-  </p>
-
-  <ul class="career">
-    <li><span class="year">2010</span> 어쿠스틱콜라보 데뷔 차트인 8곡 작사작편곡 프로듀싱</li>
-    <li><span class="year">2017</span> 소니 ATV 소속 작곡가, 기타 세션</li>
-    <li><span class="year">2018</span> 빌리빈 Producer로 애플뮤직 올해의 음악, 유튜브 데일리 11위 등의 아티스트 20팀 이상 프로듀싱</li>
-  </ul>
-
-  <!-- 참여 앨범 -->
-  <p class="section-label">참여 앨범 <span class="label-note">(마우스를 올리면 상세 정보가 보입니다)</span></p>
-  <div class="grid-covers grid-albums">
-    {albums.map((al) => (
-      <div class="cover">
-        <span class="cover-fallback">{al.name}</span>
-        <img src={al.src} alt={`${al.name} — ${al.role}`} loading="lazy" onerror="this.remove()" />
-        <span class="cover-caption">
-          <strong>{al.name}</strong><br />{al.role}
-          {al.note && <><br /><em>{al.note}</em></>}
-        </span>
-      </div>
-    ))}
-  </div>
-
-  <!-- Before / After 플레이어 -->
-  <p class="section-label">믹스 샘플 · Before / After <span class="label-note">(샘플을 골라 믹스 전후를 비교해보세요)</span></p>
-  <div class="player">
-    <div class="sample-btns">
-      <button class="sample-btn is-on" data-idx="0">Sample 1</button>
-      <button class="sample-btn" data-idx="1">Sample 2</button>
-      <button class="sample-btn" data-idx="2">Sample 3</button>
-    </div>
-
-    <div class="player-row">
-      <button id="playBtn" class="play-btn" aria-label="재생">
-        <svg class="icon-play" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
-        <svg class="icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><path d="M6 5h4v14H6zM14 5h4v14h-4z" /></svg>
-      </button>
-
-      <div class="progress-wrap">
-        <div id="progressTrack" class="progress-track" role="slider" tabindex="0"
-             aria-label="재생 위치" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-          <div id="progressFill" class="progress-fill"></div>
+  <div class="home">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">PRODUCER · MIX ENGINEER · ARTIST CONSULTANT</p>
+        <h1 id="hero-title">한 곡의 완성,<br /><em>아티스트의 다음까지.</em></h1>
+        <p class="hero-lead">당신의 귀가 정답입니다. 16년 동안 아티스트와 믹스 엔지니어, 제작자로 쌓은 경험으로 그 정답을 더 선명하게 만듭니다.</p>
+        <div class="actions">
+          <a class="button primary" href="#mixing">믹싱 알아보기</a>
+          <a class="button ghost" href="#consulting">컨설팅 알아보기</a>
         </div>
-        <div class="times"><span id="curTime">0:00</span><span id="durTime">0:00</span></div>
+        <p class="signature">김승재 Jay · Producer since 2010</p>
       </div>
-
-      <div class="ba-toggle" role="group" aria-label="Before / After 전환">
-        <button class="ba-btn is-on" data-mode="before">Before</button>
-        <button class="ba-btn" data-mode="after">After</button>
-      </div>
-    </div>
-    <p id="audioStatus" class="audio-status" role="status"></p>
-  </div>
-  <p class="portfolio-line">
-    <a href="https://youtu.be/rfmFJrLNHy4" target="_blank" rel="noopener">김승재 포트폴리오 (유튜브 일부공개) ↗</a>
-  </p>
-
-  <!-- 가격 — 샘플 바로 아래에 둔다. 들어보고 바로 신청하는 동선 -->
-  <p class="section-label">가격 <span class="label-note">(합리적인 프리미엄 가격 · 원하는 옵션을 선택하세요)</span></p>
-  <div class="plans">
-    {plans.map((pl) => (
-      <a class={`plan${pl.featured ? ' is-featured' : ''}`} href={pl.form} target="_blank" rel="noopener">
-        {pl.badge && <span class="plan-badge">{pl.badge}</span>}
-        <span class="plan-info">
-          <strong>{pl.name}</strong>
-          <span class="plan-desc">{pl.desc}</span>
-        </span>
-        <span class="plan-price">
-          {pl.was && <s>{pl.was}</s>}
-          <b>{pl.price}{pl.unit && <span class="plan-unit"> {pl.unit}</span>}</b>
-          <span class="plan-cta">신청 폼 작성 ↗</span>
-        </span>
-      </a>
-    ))}
-  </div>
-  <p class="pay-note">
-    * 원하는 옵션을 눌러 폼을 작성해 주세요. 확인 후, 작업이 가능할 시 <strong>개별 결제 링크(네이버)</strong>를 안내해 드립니다.
-  </p>
-
-  <!-- 포함 사항 -->
-  <p class="section-label">포함 사항</p>
-  <ul class="includes">
-    {includes.map((it) => (
-      <li class={it.caution ? 'is-caution' : ''}>
-        <span class="tick" aria-hidden="true">{it.caution ? '!' : '✓'}</span>
-        <div>
-          <h3>{it.title}{it.tag && <span class="pkg-tag">{it.tag}</span>}</h3>
-          <p>{it.body}</p>
+      <div class="hero-visual">
+        <div class="portrait">
+          <img src="/images/uploads/jay-profile-half.jpg" alt="흑백 반신 프로필 사진의 프로듀서 김승재" />
+          <span>김승재<br />SEOUL, KR</span>
         </div>
-      </li>
-    ))}
-  </ul>
+        <div class="record" aria-hidden="true"></div>
+      </div>
+    </section>
 
-  <p class="watch-line">
-    <a href="https://youtu.be/BFeeXk0_PR8?si=23k6tSRjX_qhnERE" target="_blank" rel="noopener">신청 전에 한번씩 봐주세요 ↗</a>
-  </p>
+    <section class="proof" aria-label="주요 경력">
+      <div><strong>16</strong><span>년 제작 경험</span></div>
+      <div><strong>200+</strong><span>참여한 곡</span></div>
+      <div><strong>20+</strong><span>프로듀싱 아티스트</span></div>
+      <div><strong>8</strong><span>차트인 곡</span></div>
+    </section>
 
-  <!-- 후기 -->
-  <p class="section-label">아티스트의 생생한 후기 <span class="label-note">(만족도 5.0 · 200곡 이상 진행)</span></p>
-  <div class="reviews">
-    {reviews.map((r) => (
-      <figure class="review">
-        <blockquote>{r.body}</blockquote>
-        <figcaption>— {r.who}</figcaption>
-      </figure>
-    ))}
+    <section id="mixing" class="section">
+      <header class="section-head">
+        <div><p class="eyebrow">01 · MIX & MASTERING</p><h2>당신이 의도한 감정이<br />대중에게 정확히 닿도록.</h2></div>
+        <p>크고 깨끗하게 만드는 것만이 믹스의 전부는 아닙니다. 곡의 이야기와 레퍼런스를 먼저 듣고, 아티스트가 선택한 방향을 완성합니다.</p>
+      </header>
+
+      <div class="mix-grid">
+        <ol class="principles">
+          <li><span>01</span><div><strong>의도부터 듣습니다</strong><p>이 곡으로 전하고 싶은 감정을 먼저 확인합니다.</p></div></li>
+          <li><span>02</span><div><strong>같은 언어로 맞춥니다</strong><p>레퍼런스와 구체적인 피드백으로 소리를 번역합니다.</p></div></li>
+          <li><span>03</span><div><strong>발매까지 완성합니다</strong><p>믹스와 마스터링 완성본을 한 곡 단위로 제공합니다.</p></div></li>
+        </ol>
+
+        <div class="player">
+          <div class="player-heading">
+            <div><p class="eyebrow">REAL MIX SAMPLES</p><h3>같은 구간에서 바로 비교해보세요.</h3></div>
+            <span>헤드폰 권장</span>
+          </div>
+          <div class="sample-btns">
+            <button class="sample-btn is-on" data-idx="0"><b>01</b> Sample</button>
+            <button class="sample-btn" data-idx="1"><b>02</b> Sample</button>
+            <button class="sample-btn" data-idx="2"><b>03</b> Sample</button>
+          </div>
+          <div class="wave" aria-hidden="true">
+            {Array.from({ length: 40 }).map((_, i) => <i style={`--h:${20 + ((i * 19) % 66)}%`}></i>)}
+          </div>
+          <div class="player-row">
+            <button id="playBtn" class="play-btn" aria-label="재생">
+              <svg class="icon-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+              <svg class="icon-pause" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><path d="M6 5h4v14H6zM14 5h4v14h-4z" /></svg>
+            </button>
+            <div class="progress-wrap">
+              <div id="progressTrack" class="progress-track" role="slider" tabindex="0" aria-label="재생 위치" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progressFill" class="progress-fill"></div></div>
+              <div class="times"><span id="curTime">0:00</span><span id="durTime">0:00</span></div>
+            </div>
+            <div class="ba-toggle" role="group" aria-label="Before / After 전환">
+              <button class="ba-btn is-on" data-mode="before">Before</button>
+              <button class="ba-btn" data-mode="after">After</button>
+            </div>
+          </div>
+          <p id="audioStatus" class="audio-status" role="status"></p>
+          <a class="sub-link" href="https://youtu.be/rfmFJrLNHy4" target="_blank" rel="noopener">전체 포트폴리오 듣기 ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="work section" aria-labelledby="work-title">
+      <header class="section-head compact">
+        <div><p class="eyebrow">SELECTED WORK</p><h2 id="work-title">함께 만든 음악들</h2></div>
+        <p>어쿠스틱콜라보 데뷔부터<br />애플뮤직 올해의 음악까지.</p>
+      </header>
+      <div class="albums">
+        {albums.map((album, i) => (
+          <article class="album">
+            <span class="index">{String(i + 1).padStart(2, '0')}</span>
+            <img src={album.src} alt={`${album.name} — ${album.role}`} loading="lazy" />
+            <div><strong>{album.name}</strong><span>{album.role}</span>{album.note && <em>{album.note}</em>}</div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="consulting" class="consulting">
+      <div class="consulting-copy">
+        <p class="eyebrow">02 · ARTIST CONSULTING</p>
+        <h2>음악은 만들었는데,<br />다음이 막막하다면.</h2>
+        <p>무엇을 만들고, 어떻게 알리고, 어디에 유통하며, 얼마에 만들어야 하는지. 현재를 네 관점으로 진단하고 실행 가능한 1년 로드맵을 만듭니다.</p>
+        <a class="button light" href="#pricing">컨설팅 상품 보기</a>
+      </div>
+      <div class="four-p">
+        <div class="you"><strong>YOU</strong><span>지금의 음악과 목표</span></div>
+        <div><span>01</span><strong>PRODUCT</strong><p>음악과 캐릭터</p></div>
+        <div><span>02</span><strong>PROMOTION</strong><p>콘텐츠와 메시지</p></div>
+        <div><span>03</span><strong>PLACE</strong><p>유통</p></div>
+        <div><span>04</span><strong>PRICE</strong><p>제작비 산정</p></div>
+      </div>
+    </section>
+
+    <section id="pricing" class="section">
+      <header class="section-head compact">
+        <div><p class="eyebrow">CHOOSE YOUR NEXT STEP</p><h2>지금 필요한 만큼 선택하세요.</h2></div>
+        <p>신청서를 검토한 뒤 작업 가능 여부와<br />개별 결제 링크를 안내합니다.</p>
+      </header>
+      <div class="plans">
+        {plans.map((plan) => (
+          <a class:list={['plan', { featured: plan.featured }]} href={plan.form} target="_blank" rel="noopener">
+            {plan.badge && <span class="badge">{plan.badge}</span>}
+            <span class="type">{plan.type}</span>
+            <strong class="name">{plan.name}</strong>
+            <span class="desc">{plan.desc}</span>
+            <span class="detail">{plan.detail}</span>
+            <span class="plan-bottom"><span>{plan.was && <s>{plan.was}</s>}<b>{plan.price}</b></span><span>신청하기 ↗</span></span>
+          </a>
+        ))}
+      </div>
+      <div class="package-note"><b>PACKAGE NOTE</b><p>믹스 + 컨설팅에는 <strong>전 과정 녹화·편집본, 자체 제작 교재, 4P 피드백과 1년 활동 로드맵</strong>이 포함됩니다. 완전 초급자는 신청 전 상담이 필요합니다.</p></div>
+    </section>
+
+    <section class="section reviews-section">
+      <header class="section-head compact">
+        <div><p class="eyebrow">ARTIST NOTES</p><h2>작업 뒤에 남은 이야기</h2></div>
+        <p>후기는 과장 없이,<br />실제 작업자의 말로 전합니다.</p>
+      </header>
+      <div class="reviews">
+        {reviews.map((review, i) => (
+          <figure class="review">
+            <span class="quote">“</span>
+            <blockquote>{review.body}</blockquote>
+            <figcaption><span>{review.who}</span><em>{review.service}</em><b>{String(i + 1).padStart(2, '0')}</b></figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <section class="closing">
+      <p class="eyebrow">READY WHEN YOU ARE</p>
+      <h2>당신의 음악이 어디까지 갈 수 있는지,<br />한 곡부터 함께 확인해봅시다.</h2>
+      <div class="actions"><a class="button primary" href="#pricing">서비스 선택하기</a><a class="sub-link" href="https://youtu.be/BFeeXk0_PR8?si=23k6tSRjX_qhnERE" target="_blank" rel="noopener">신청 전 안내 영상 보기 ↗</a></div>
+      <p>컨설팅은 온·오프라인 중 선택할 수 있으며, 1:1부터 4:1까지 진행합니다.</p>
+    </section>
   </div>
 </Base>
 
 <style>
-  .career { list-style: none; padding: 0; margin: 1.5em 0; color: var(--ink-soft); font-size: 15px; }
-  .career li { padding: 0.2em 0; }
-  .career .year { color: var(--amber-dark); font-weight: 700; margin-right: 0.6em; }
+  .home { --night:#171714; --cream:#f4efe4; }
+  .home section { scroll-margin-top:110px; }
+  .eyebrow { margin:0 0 1em; color:var(--amber-dark); font-size:11px; font-weight:800; letter-spacing:.16em; line-height:1.4; }
+  .hero { min-height:650px; padding:4.5em 0 5em; display:grid; grid-template-columns:1.08fr .92fr; gap:6vw; align-items:center; border-bottom:1px solid var(--rule); }
+  .hero h1 { max-width:760px; margin:0; font-size:clamp(42px,5.2vw,76px); line-height:1.08; letter-spacing:-.055em; word-break:keep-all; }
+  .hero h1 em { color:var(--amber-dark); font-style:normal; }
+  .hero-lead { max-width:600px; margin:2em 0; color:var(--ink-soft); font-size:18px; }
+  .actions { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .button { min-height:48px; padding:.72em 1.35em; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--ink); border-radius:999px; color:var(--ink); font-size:14px; font-weight:700; transition:.18s; }
+  .button:hover { transform:translateY(-2px); }
+  .primary { background:var(--ink); color:var(--paper); }
+  .primary:hover { background:var(--amber); border-color:var(--amber); color:#fff; }
+  .ghost:hover { color:var(--amber-dark); border-color:var(--amber); }
+  .signature { margin:2.6em 0 0; color:var(--faint); font-size:12px; letter-spacing:.08em; }
+  .hero-visual { position:relative; min-height:500px; display:flex; align-items:center; justify-content:center; }
+  .portrait { position:relative; z-index:2; width:min(100%,390px); aspect-ratio:4/5; overflow:hidden; background:var(--tile); box-shadow:20px 24px 0 color-mix(in srgb,var(--amber) 22%,transparent); }
+  .portrait img { width:100%; height:100%; display:block; object-fit:cover; object-position:58% center; filter:saturate(.78) contrast(1.04); }
+  .portrait span { position:absolute; left:18px; bottom:18px; padding:.65em .8em; background:var(--night); color:#fff; font-size:10px; font-weight:700; letter-spacing:.14em; line-height:1.5; }
+  .record { position:absolute; right:-8%; bottom:0; width:230px; aspect-ratio:1; border-radius:50%; background:repeating-radial-gradient(circle,#2b2a27 0 2px,#111 3px 7px); box-shadow:0 22px 50px #0003; }
+  .record::before { content:''; position:absolute; inset:39%; border:18px solid var(--amber); border-radius:50%; background:var(--paper); }
+  .proof { display:grid; grid-template-columns:repeat(4,1fr); border-bottom:1px solid var(--rule); }
+  .proof div { padding:2em 1.6em; border-right:1px solid var(--rule); }
+  .proof div:first-child { padding-left:0; } .proof div:last-child { border:0; }
+  .proof strong { display:block; font-size:30px; line-height:1; letter-spacing:-.04em; } .proof span { color:var(--ink-soft); font-size:12px; }
 
-  /* 앨범 그리드 — 홈 디스코그라피와 같은 .cover 위에 4열만 얹는다 */
-  .grid-albums { grid-template-columns: repeat(4, 1fr); }
-  .cover-fallback { padding: 0 6px; font-size: 12px; }
-  .cover-caption strong { font-size: 12px; }
-  .cover-caption em { font-style: normal; color: #D9B87F; }
-  @media (max-width: 768px) { .grid-albums { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 480px) { .grid-albums { grid-template-columns: repeat(2, 1fr); } }
+  .section { padding:7em 0; border-bottom:1px solid var(--rule); }
+  .section-head { display:flex; justify-content:space-between; align-items:end; gap:3em; margin-bottom:3.2em; }
+  .section-head > div { max-width:760px; }
+  .section-head h2,.consulting h2,.closing h2 { margin:0; font-size:clamp(34px,4vw,56px); line-height:1.18; letter-spacing:-.045em; word-break:keep-all; }
+  .section-head > p { max-width:380px; margin:0; color:var(--ink-soft); font-size:15px; text-align:right; }
+  .mix-grid { display:grid; grid-template-columns:.78fr 1.22fr; gap:28px; }
+  .principles { margin:0; padding:1.4em 2em; list-style:none; border:1px solid var(--rule); }
+  .principles li { padding:1.2em 0; display:grid; grid-template-columns:34px 1fr; gap:12px; border-bottom:1px solid var(--rule); }
+  .principles li:last-child { border:0; } .principles li>span { color:var(--amber-dark); font-size:11px; font-weight:800; }
+  .principles strong { font-size:15px; } .principles p { margin:.3em 0 0; color:var(--ink-soft); font-size:13px; line-height:1.65; }
 
-  /* Before / After 플레이어 */
-  .player { border: 1px solid var(--rule); border-radius: 8px; padding: 16px; }
-  .sample-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
-  .sample-btn {
-    font: inherit; font-size: 14px; cursor: pointer; padding: 0.4em 0;
-    background: none; color: var(--ink-soft);
-    border: 1px solid var(--rule); border-radius: 6px;
-    transition: color .15s, border-color .15s;
+  .player { padding:2.2em; background:var(--night); color:#f7f3e9; border-radius:4px; }
+  .player .eyebrow { color:var(--amber); } .player-heading { display:flex; justify-content:space-between; align-items:start; gap:1em; }
+  .player-heading h3 { margin:0; font-size:22px; } .player-heading>span { color:#aaa69e; font-size:11px; white-space:nowrap; }
+  .sample-btns { margin:2em 0 1.2em; display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .sample-btn { padding:.7em; border:1px solid #3d3b36; background:none; color:#aaa69e; border-radius:3px; cursor:pointer; font:inherit; font-size:12px; }
+  .sample-btn b { color:var(--amber); margin-right:.3em; } .sample-btn.is-on { background:#f4efe4; border-color:#f4efe4; color:#171714; }
+  .wave { height:100px; display:flex; align-items:center; gap:3px; overflow:hidden; opacity:.8; }
+  .wave i { flex:1; min-width:2px; height:var(--h); background:#f4efe4; border-radius:2px; }
+  .player-row { margin-top:1.5em; display:flex; align-items:center; gap:14px; }
+  .play-btn { width:48px; height:48px; flex:none; display:grid; place-items:center; border:0; border-radius:50%; background:var(--amber); color:#171714; cursor:pointer; }
+  .play-btn svg[hidden] { display:none; } .progress-wrap { flex:1; min-width:0; }
+  .progress-track { height:5px; overflow:hidden; background:#3d3b36; cursor:pointer; border-radius:99px; }
+  .progress-track:focus-visible { outline:2px solid var(--amber); outline-offset:4px; } .progress-fill { width:0; height:100%; background:var(--amber); }
+  .times { margin-top:5px; display:flex; justify-content:space-between; color:#88847b; font-size:11px; }
+  .ba-toggle { display:grid; grid-template-columns:1fr 1fr; border:1px solid #47443e; border-radius:99px; overflow:hidden; }
+  .ba-btn { padding:.45em .85em; border:0; background:none; color:#aaa69e; cursor:pointer; font:inherit; font-size:12px; }
+  .ba-btn.is-on { background:#f4efe4; color:#171714; } .audio-status { margin:.5em 0 0; color:#aaa69e; font-size:12px; }
+  .audio-status:empty { display:none; } .sub-link { color:var(--ink-soft); font-size:13px; }
+  .player .sub-link { display:block; margin-top:1.2em; color:#d4cfc4; text-align:right; }
+
+  .compact { margin-bottom:3em; }
+  .albums { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; }
+  .album { position:relative; aspect-ratio:1; overflow:hidden; background:var(--tile); }
+  .album:nth-child(1),.album:nth-child(6) { grid-column:span 2; grid-row:span 2; }
+  .album img { width:100%; height:100%; display:block; object-fit:cover; transition:.4s; }
+  .album .index { position:absolute; z-index:2; top:9px; left:10px; color:#fff; font-size:10px; font-weight:700; text-shadow:0 1px 5px #000; }
+  .album>div { position:absolute; z-index:2; inset:auto 0 0; padding:2.8em .9em .8em; display:flex; flex-direction:column; background:linear-gradient(transparent,#111e); color:#fff; transition:.28s; }
+  .album:hover img { transform:scale(1.035); filter:saturate(.75); }
+  .album strong { font-size:13px; line-height:1.3; word-break:keep-all; } .album div span,.album div em { color:#eee; font-size:10px; font-weight:700; font-style:normal; line-height:1.5; }
+
+  .consulting { margin:2em 0; padding:6em; display:grid; grid-template-columns:.9fr 1.1fr; gap:6em; align-items:center; background:var(--night); color:#f4efe4; border-radius:4px; }
+  .consulting .eyebrow { color:var(--amber); } .consulting-copy>p:not(.eyebrow) { margin:1.7em 0 2em; color:#aaa69e; font-size:16px; }
+  .light { border-color:#f4efe4; color:#f4efe4; } .light:hover { background:#f4efe4; color:#171714; }
+  .four-p { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:#3c3933; }
+  .four-p>div { min-height:145px; padding:1.5em; background:var(--night); }
+  .four-p .you { grid-column:span 2; min-height:126px; display:flex; flex-direction:column; align-items:center; justify-content:center; border:1px solid var(--amber); }
+  .you strong { color:var(--amber); font-size:30px; letter-spacing:.18em; } .you span,.four-p p { color:#aaa69e; font-size:12px; }
+  .four-p>div>span { color:var(--amber); font-size:10px; } .four-p>div>strong { display:block; margin-top:1.3em; font-size:12px; letter-spacing:.12em; }
+  .four-p p { margin:.15em 0 0; }
+
+  .plans { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .plan { position:relative; min-height:380px; padding:2em; display:flex; flex-direction:column; border:1px solid var(--rule); color:var(--ink); background:color-mix(in srgb,var(--paper) 94%,var(--ink)); transition:.2s; }
+  .plan:hover { transform:translateY(-5px); border-color:var(--amber); } .plan.featured { background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  .badge { position:absolute; top:0; right:0; padding:.5em .8em; background:var(--amber); color:#fff; font-size:10px; font-weight:700; }
+  .type { color:var(--amber-dark); font-size:10px; font-weight:800; letter-spacing:.16em; } .featured .type { color:var(--amber); }
+  .name { margin:1.5em 0 .7em; font-size:24px; letter-spacing:-.03em; } .desc { color:var(--ink-soft); font-size:14px; }
+  .featured .desc,.featured .detail { color:color-mix(in srgb,var(--paper) 64%,transparent); }
+  .detail { margin-top:1.5em; padding-top:1.2em; border-top:1px solid var(--rule); color:var(--ink-soft); font-size:12px; }
+  .featured .detail { border-color:#ffffff24; }
+  .plan-bottom { margin-top:auto; display:flex; justify-content:space-between; align-items:end; gap:1em; color:var(--amber-dark); font-size:12px; }
+  .featured .plan-bottom { color:var(--amber); } .plan-bottom>span:first-child { display:flex; flex-direction:column; color:inherit; }
+  .plan-bottom s { color:var(--faint); } .plan-bottom b { color:var(--ink); font-size:25px; } .featured .plan-bottom b { color:var(--paper); }
+  .package-note { margin-top:18px; padding:1.3em 1.5em; display:grid; grid-template-columns:150px 1fr; gap:1.5em; border:1px solid var(--rule); }
+  .package-note>b { color:var(--amber-dark); font-size:10px; letter-spacing:.15em; } .package-note p { margin:0; color:var(--ink-soft); font-size:13px; } .package-note strong { color:var(--ink); }
+
+  .reviews { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .review { min-height:250px; margin:0; padding:2em; display:flex; flex-direction:column; border:1px solid var(--rule); }
+  .quote { height:42px; color:var(--amber); font:64px/1 Georgia,serif; } .review blockquote { margin:1em 0; padding:0; border:0; color:var(--ink); font-size:14px; }
+  .review figcaption { margin-top:auto; display:flex; align-items:center; gap:.7em; color:var(--ink-soft); font-size:12px; }
+  .review figcaption em { font-style:normal; } .review figcaption b { margin-left:auto; color:var(--faint); font-size:22px; font-weight:400; }
+  .closing { padding:8em 0 5em; text-align:center; } .closing h2 { max-width:900px; margin:0 auto .8em; }
+  .closing .actions { justify-content:center; } .closing>p:last-child { margin-top:2em; color:var(--faint); font-size:12px; }
+
+  /* 다크모드에서만 시안 2의 네온 포인트를 강조한다. 라이트모드는 위 스타일 그대로다. */
+  :global(:root[data-theme='dark']) .home { --night:#11130f; }
+  :global(:root[data-theme='dark']) .primary { background:var(--amber); border-color:var(--amber); color:#0a0b09; }
+  :global(:root[data-theme='dark']) .primary:hover { background:#d7ff67; border-color:#d7ff67; color:#0a0b09; box-shadow:0 0 0 4px color-mix(in srgb,var(--amber) 18%,transparent); }
+  :global(:root[data-theme='dark']) .proof strong { color:var(--amber); }
+  :global(:root[data-theme='dark']) .portrait span { border-left:3px solid var(--amber); }
+  :global(:root[data-theme='dark']) .player { border:1px solid #353831; box-shadow:0 20px 70px color-mix(in srgb,var(--amber) 8%,transparent); }
+  :global(:root[data-theme='dark']) .player .wave i { background:var(--amber); }
+  :global(:root[data-theme='dark']) .player .sample-btn.is-on,
+  :global(:root[data-theme='dark']) .player .ba-btn.is-on { background:var(--amber); border-color:var(--amber); color:#0a0b09; }
+  :global(:root[data-theme='dark']) .consulting { border:1px solid #353831; box-shadow:inset 0 1px 0 color-mix(in srgb,var(--amber) 14%,transparent); }
+  :global(:root[data-theme='dark']) .consulting .light { border-color:var(--amber); color:var(--amber); }
+  :global(:root[data-theme='dark']) .consulting .light:hover { background:var(--amber); color:#0a0b09; }
+  :global(:root[data-theme='dark']) .four-p .you { background:var(--amber); color:#0a0b09; border-color:var(--amber); }
+  :global(:root[data-theme='dark']) .four-p .you strong,
+  :global(:root[data-theme='dark']) .four-p .you span { color:#0a0b09; }
+  :global(:root[data-theme='dark']) .plan.featured { background:var(--amber); color:#0a0b09; border-color:var(--amber); }
+  :global(:root[data-theme='dark']) .plan.featured .type,
+  :global(:root[data-theme='dark']) .plan.featured .desc,
+  :global(:root[data-theme='dark']) .plan.featured .detail,
+  :global(:root[data-theme='dark']) .plan.featured .plan-bottom,
+  :global(:root[data-theme='dark']) .plan.featured .plan-bottom b { color:#0a0b09; }
+  :global(:root[data-theme='dark']) .plan.featured .detail { border-color:#0a0b0935; }
+  :global(:root[data-theme='dark']) .plan.featured .badge { background:#0a0b09; color:var(--amber); }
+
+  @media(max-width:920px) {
+    .hero { min-height:auto; grid-template-columns:1fr; padding-top:3em; } .hero-visual { min-height:450px; }
+    .mix-grid,.consulting { grid-template-columns:1fr; } .consulting { padding:4em; gap:3em; }
+    .albums { grid-template-columns:repeat(4,1fr); } .plans { grid-template-columns:1fr; } .plan { min-height:280px; }
   }
-  .sample-btn:hover { color: var(--amber-dark); border-color: var(--amber); }
-  .sample-btn.is-on { color: var(--paper); background: var(--ink); border-color: var(--ink); }
-
-  .player-row { display: flex; align-items: center; gap: 14px; }
-  .play-btn {
-    width: 40px; height: 40px; flex-shrink: 0; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    border: 0; border-radius: 50%; background: var(--amber); color: #fff;
-    transition: background .15s;
+  @media(max-width:640px) {
+    .hero { gap:2em; padding:2.8em 0 3.5em; } .hero h1 { font-size:clamp(38px,11vw,52px); } .hero-lead { font-size:16px; }
+    .hero-visual { min-height:380px; } .portrait { width:78%; } .record { width:170px; right:0; }
+    .proof { grid-template-columns:repeat(2,1fr); } .proof div { padding:1.5em 0; border-right:0; border-bottom:1px solid var(--rule); }
+    .proof div:nth-child(odd) { border-right:1px solid var(--rule); } .proof div:nth-child(even) { padding-left:1.2em; }
+    .section { padding:5em 0; } .section-head { align-items:start; flex-direction:column; gap:1em; } .section-head>p { text-align:left; }
+    .principles,.player { padding:1.4em; } .player-row { flex-wrap:wrap; } .progress-wrap { order:3; flex-basis:100%; } .ba-toggle { margin-left:auto; } .wave { height:75px; }
+    .albums { grid-template-columns:repeat(2,1fr); gap:7px; } .album:nth-child(1),.album:nth-child(6) { grid-column:span 1; grid-row:span 1; }
+    .album>div { padding:2.4em .7em .6em; transform:none; }
+    .consulting { margin:0 -20px; padding:4em 20px; border-radius:0; } .four-p>div { min-height:125px; padding:1.2em; }
+    .package-note { grid-template-columns:1fr; gap:.5em; } .reviews { grid-template-columns:1fr; } .review { min-height:220px; padding:1.5em; } .closing { padding-top:6em; }
   }
-  .play-btn:hover { background: var(--amber-dark); }
-  .play-btn svg[hidden] { display: none; }
-
-  .progress-wrap { flex: 1; min-width: 0; }
-  .progress-track { height: 6px; border-radius: 999px; background: var(--rule); cursor: pointer; overflow: hidden; }
-  .progress-track:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
-  .progress-fill { height: 100%; width: 0; background: var(--amber); }
-  .times { display: flex; justify-content: space-between; margin-top: 4px; color: var(--ink-soft); font-size: 12px; }
-
-  .ba-toggle { display: grid; grid-template-columns: 1fr 1fr; flex-shrink: 0; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; }
-  .ba-btn {
-    font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
-    padding: 0.35em 0.9em; border: 0; background: none; color: var(--ink-soft);
-    transition: background .15s, color .15s;
-  }
-  .ba-btn.is-on { background: var(--ink); color: var(--paper); }
-  .audio-status { margin: 10px 0 0; text-align: center; color: var(--ink-soft); font-size: 12px; }
-  .audio-status:empty { display: none; }
-
-  @media (max-width: 560px) {
-    .player-row { flex-wrap: wrap; }
-    .progress-wrap { order: 3; flex-basis: 100%; }
-    .ba-toggle { margin-left: auto; }
-  }
-
-  /* 포함 사항 */
-  .includes { list-style: none; padding: 0; margin: 1.2em 0; }
-  .includes li { display: flex; gap: 12px; padding: 0.7em 0; }
-  .includes h3 { font-size: 15px; font-weight: 600; margin: 0; line-height: 1.6; }
-  .includes p { margin: 0.15em 0 0; color: var(--ink-soft); font-size: 14px; }
-  .tick {
-    flex-shrink: 0; width: 20px; height: 20px; margin-top: 0.3em;
-    display: flex; align-items: center; justify-content: center;
-    border: 1px solid var(--amber); border-radius: 50%;
-    color: var(--amber-dark); font-size: 11px; font-weight: 700;
-  }
-  .includes .is-caution .tick { border-color: var(--caution); color: var(--caution); }
-  .pkg-tag {
-    margin-left: 0.5em; padding: 0.1em 0.5em; vertical-align: 1px;
-    border: 1px solid var(--amber); border-radius: 999px;
-    color: var(--amber-dark); font-size: 11px; font-weight: 500;
-  }
-  .watch-line { font-size: 14px; color: var(--ink-soft); }
-  /* 샘플 밑 얇은 한 줄 — 플레이어에 바짝 붙인다 */
-  .portfolio-line { margin: 0.5em 0 0; font-size: 13px; color: var(--ink-soft); text-align: right; }
-
-  /* 가격 — 한 줄 3분할. 카드 안은 위(이름·설명) 아래(가격) 세로 배치 */
-  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .plan {
-    position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 0.8em;
-    padding: 1.1em 1.2em; border: 1px solid var(--rule); border-radius: 8px;
-    color: inherit; transition: border-color .15s, background .15s;
-  }
-  /* 배경이 크림톤(--paper #FAF7F0)이라 강조는 살짝 더 진한 앰버 틴트로 준다 */
-  .plan:hover { border-color: var(--amber); background: rgba(217, 142, 31, 0.05); }
-  .plan.is-featured { border-color: var(--amber); background: rgba(217, 142, 31, 0.09); }
-  .plan.is-featured:hover { border-color: var(--amber-dark); }
-  .plan-badge {
-    position: absolute; top: -0.75em; left: 1em;
-    background: var(--amber); color: #fff; font-size: 11px; font-weight: 700;
-    padding: 0.15em 0.7em; border-radius: 999px;
-  }
-  .plan-info { display: flex; flex-direction: column; }
-  .plan-info strong { font-size: 15px; color: var(--ink); }
-  .plan-desc { color: var(--ink-soft); font-size: 13px; }
-  .plan-price { text-align: left; white-space: nowrap; display: flex; flex-direction: column; }
-  .plan-price s { color: var(--faint); font-size: 12px; }
-  .plan-price b { font-size: 20px; color: var(--ink); }
-  .plan-unit { font-size: 12px; font-weight: 400; color: var(--ink-soft); }
-  .plan-cta { color: var(--amber); font-size: 11px; }
-  .pay-note { color: var(--ink-soft); font-size: 13px; text-align: center; }
-  .pay-note strong { color: var(--ink); }
-
-  /* 폰에서도 한 줄 3분할 유지 — 카드가 좁아지니 글자와 여백만 줄인다 */
-  @media (max-width: 640px) {
-    .plans { gap: 8px; }
-    .plan { padding: 0.9em 0.7em; gap: 0.6em; }
-    .plan-info strong { font-size: 13px; }
-    .plan-desc { font-size: 11px; }
-    .plan-price { white-space: normal; }
-    .plan-price b { font-size: 15px; }
-    .plan-price s { font-size: 11px; }
-    .plan-unit, .plan-cta { font-size: 10px; }
-    .plan-badge { left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 10px; padding: 0.1em 0.6em; }
-  }
-
-  /* 후기 */
-  .reviews { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-  .review { margin: 0; border: 1px solid var(--rule); border-radius: 8px; padding: 1.2em; }
-  .review blockquote { margin: 0; padding: 0; border: 0; color: var(--ink); font-size: 14px; line-height: 1.75; }
-  .review figcaption { margin-top: 0.8em; color: var(--ink-soft); font-size: 13px; }
-  @media (max-width: 768px) { .reviews { grid-template-columns: 1fr; } }
+  @media(prefers-reduced-motion:reduce) { .button,.album img,.album>div,.plan { transition:none; } }
 </style>
 
 <script>
