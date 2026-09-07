@@ -63,4 +63,6 @@ tags: [음악활동, 작업습관, 상상노트]
 
 **이 포스팅은 네이버 쇼핑 커넥트 활동의 일환으로, 판매 발생 시 수수료를 제공받습니다.**
 
-<a href="https://naver.me/xm0mxaq2" rel="sponsored nofollow noopener" target="_blank">https&#58;//naver.me/xm0mxaq2</a>
+<div>
+<a href="https://naver.me/xm0mxaq2" rel="sponsored nofollow noopener" target="_blank">https://naver.me/xm0mxaq2</a>
+</div>
