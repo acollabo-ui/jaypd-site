@@ -53,31 +53,24 @@ const serviceSchema = {
   schema={serviceSchema}
 >
   <div class="home">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <p class="eyebrow">PRODUCER · MIX ENGINEER · ARTIST CONSULTANT</p>
-        <h1 id="hero-title">한 곡의 완성,<br /><em>아티스트의 다음까지.</em></h1>
-        <p class="hero-lead">당신의 귀가 정답입니다. 16년 동안 아티스트와 믹스 엔지니어, 제작자로 쌓은 경험으로 그 정답을 더 선명하게 만듭니다.</p>
-        <div class="actions">
-          <a class="button primary" href="#mixing">믹싱 알아보기</a>
-          <a class="button ghost" href="#consulting">컨설팅 알아보기</a>
-        </div>
-        <p class="signature">김승재 Jay · Producer since 2010</p>
+    <section id="pricing" class="section pricing-first" aria-labelledby="pricing-title">
+      <header class="section-head compact">
+        <div><p class="eyebrow">CHOOSE YOUR NEXT STEP</p><h1 id="pricing-title">지금 필요한 만큼 선택하세요.</h1></div>
+        <p>신청서를 검토한 뒤 작업 가능 여부와<br />개별 결제 링크를 안내합니다.</p>
+      </header>
+      <div class="plans">
+        {plans.map((plan) => (
+          <a class:list={['plan', { featured: plan.featured }]} href={plan.form} target="_blank" rel="noopener">
+            {plan.badge && <span class="badge">{plan.badge}</span>}
+            <span class="type">{plan.type}</span>
+            <strong class="name">{plan.name}</strong>
+            <span class="desc">{plan.desc}</span>
+            <span class="detail">{plan.detail}</span>
+            <span class="plan-bottom"><span>{plan.was && <s>{plan.was}</s>}<b>{plan.price}</b></span><span>신청하기 ↗</span></span>
+          </a>
+        ))}
       </div>
-      <div class="hero-visual">
-        <div class="portrait">
-          <img src="/images/uploads/jay-profile-half.jpg" alt="흑백 반신 프로필 사진의 프로듀서 김승재" />
-          <span>김승재<br />SEOUL, KR</span>
-        </div>
-        <div class="record" aria-hidden="true"></div>
-      </div>
-    </section>
-
-    <section class="proof" aria-label="주요 경력">
-      <div><strong>16</strong><span>년 제작 경험</span></div>
-      <div><strong>200+</strong><span>참여한 곡</span></div>
-      <div><strong>20+</strong><span>프로듀싱 아티스트</span></div>
-      <div><strong>8</strong><span>차트인 곡</span></div>
+      <div class="package-note"><b>PACKAGE NOTE</b><p>믹스 + 컨설팅에는 <strong>전 과정 녹화·편집본, 자체 제작 교재, 4P 피드백과 1년 활동 로드맵</strong>이 포함됩니다. 완전 초급자는 신청 전 상담이 필요합니다.</p></div>
     </section>
 
     <section id="mixing" class="section">
@@ -158,25 +151,7 @@ const serviceSchema = {
       </div>
     </section>
 
-    <section id="pricing" class="section">
-      <header class="section-head compact">
-        <div><p class="eyebrow">CHOOSE YOUR NEXT STEP</p><h2>지금 필요한 만큼 선택하세요.</h2></div>
-        <p>신청서를 검토한 뒤 작업 가능 여부와<br />개별 결제 링크를 안내합니다.</p>
-      </header>
-      <div class="plans">
-        {plans.map((plan) => (
-          <a class:list={['plan', { featured: plan.featured }]} href={plan.form} target="_blank" rel="noopener">
-            {plan.badge && <span class="badge">{plan.badge}</span>}
-            <span class="type">{plan.type}</span>
-            <strong class="name">{plan.name}</strong>
-            <span class="desc">{plan.desc}</span>
-            <span class="detail">{plan.detail}</span>
-            <span class="plan-bottom"><span>{plan.was && <s>{plan.was}</s>}<b>{plan.price}</b></span><span>신청하기 ↗</span></span>
-          </a>
-        ))}
-      </div>
-      <div class="package-note"><b>PACKAGE NOTE</b><p>믹스 + 컨설팅에는 <strong>전 과정 녹화·편집본, 자체 제작 교재, 4P 피드백과 1년 활동 로드맵</strong>이 포함됩니다. 완전 초급자는 신청 전 상담이 필요합니다.</p></div>
-    </section>
+
 
     <section class="section reviews-section">
       <header class="section-head compact">
@@ -207,32 +182,18 @@ const serviceSchema = {
   .home { --night:#171714; --cream:#f4efe4; }
   .home section { scroll-margin-top:110px; }
   .eyebrow { margin:0 0 1em; color:var(--amber-dark); font-size:11px; font-weight:800; letter-spacing:.16em; line-height:1.4; }
-  .hero { min-height:650px; padding:4.5em 0 5em; display:grid; grid-template-columns:1.08fr .92fr; gap:6vw; align-items:center; border-bottom:1px solid var(--rule); }
-  .hero h1 { max-width:760px; margin:0; font-size:clamp(42px,5.2vw,76px); line-height:1.08; letter-spacing:-.055em; word-break:keep-all; }
-  .hero h1 em { color:var(--amber-dark); font-style:normal; }
-  .hero-lead { max-width:600px; margin:2em 0; color:var(--ink-soft); font-size:18px; }
   .actions { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
   .button { min-height:48px; padding:.72em 1.35em; display:inline-flex; align-items:center; justify-content:center; border:1px solid var(--ink); border-radius:999px; color:var(--ink); font-size:14px; font-weight:700; transition:.18s; }
   .button:hover { transform:translateY(-2px); }
   .primary { background:var(--ink); color:var(--paper); }
   .primary:hover { background:var(--amber); border-color:var(--amber); color:#fff; }
   .ghost:hover { color:var(--amber-dark); border-color:var(--amber); }
-  .signature { margin:2.6em 0 0; color:var(--faint); font-size:12px; letter-spacing:.08em; }
-  .hero-visual { position:relative; min-height:500px; display:flex; align-items:center; justify-content:center; }
-  .portrait { position:relative; z-index:2; width:min(100%,390px); aspect-ratio:4/5; overflow:hidden; background:var(--tile); box-shadow:20px 24px 0 color-mix(in srgb,var(--amber) 22%,transparent); }
-  .portrait img { width:100%; height:100%; display:block; object-fit:cover; object-position:58% center; filter:saturate(.78) contrast(1.04); }
-  .portrait span { position:absolute; left:18px; bottom:18px; padding:.65em .8em; background:var(--night); color:#fff; font-size:10px; font-weight:700; letter-spacing:.14em; line-height:1.5; }
-  .record { position:absolute; right:-8%; bottom:0; width:230px; aspect-ratio:1; border-radius:50%; background:repeating-radial-gradient(circle,#2b2a27 0 2px,#111 3px 7px); box-shadow:0 22px 50px #0003; }
-  .record::before { content:''; position:absolute; inset:39%; border:18px solid var(--amber); border-radius:50%; background:var(--paper); }
-  .proof { display:grid; grid-template-columns:repeat(4,1fr); border-bottom:1px solid var(--rule); }
-  .proof div { padding:2em 1.6em; border-right:1px solid var(--rule); }
-  .proof div:first-child { padding-left:0; } .proof div:last-child { border:0; }
-  .proof strong { display:block; font-size:30px; line-height:1; letter-spacing:-.04em; } .proof span { color:var(--ink-soft); font-size:12px; }
 
   .section { padding:7em 0; border-bottom:1px solid var(--rule); }
+  .pricing-first { padding-top:3em; padding-bottom:4em; }
   .section-head { display:flex; justify-content:space-between; align-items:end; gap:3em; margin-bottom:3.2em; }
   .section-head > div { max-width:760px; }
-  .section-head h2,.consulting h2,.closing h2 { margin:0; font-size:clamp(34px,4vw,56px); line-height:1.18; letter-spacing:-.045em; word-break:keep-all; }
+  .section-head h1,.section-head h2,.consulting h2,.closing h2 { margin:0; font-size:clamp(34px,4vw,56px); line-height:1.18; letter-spacing:-.045em; word-break:keep-all; }
   .section-head > p { max-width:380px; margin:0; color:var(--ink-soft); font-size:15px; text-align:right; }
   .mix-grid { display:grid; grid-template-columns:.78fr 1.22fr; gap:28px; }
   .principles { margin:0; padding:1.4em 2em; list-style:none; border:1px solid var(--rule); }
@@ -307,8 +268,6 @@ const serviceSchema = {
   :global(:root[data-theme='dark']) .home { --night:#11130f; }
   :global(:root[data-theme='dark']) .primary { background:var(--amber); border-color:var(--amber); color:#0a0b09; }
   :global(:root[data-theme='dark']) .primary:hover { background:#d7ff67; border-color:#d7ff67; color:#0a0b09; box-shadow:0 0 0 4px color-mix(in srgb,var(--amber) 18%,transparent); }
-  :global(:root[data-theme='dark']) .proof strong { color:var(--amber); }
-  :global(:root[data-theme='dark']) .portrait span { border-left:3px solid var(--amber); }
   :global(:root[data-theme='dark']) .player { border:1px solid #353831; box-shadow:0 20px 70px color-mix(in srgb,var(--amber) 8%,transparent); }
   :global(:root[data-theme='dark']) .player .wave i { background:var(--amber); }
   :global(:root[data-theme='dark']) .player .sample-btn.is-on,
@@ -329,16 +288,13 @@ const serviceSchema = {
   :global(:root[data-theme='dark']) .plan.featured .badge { background:#0a0b09; color:var(--amber); }
 
   @media(max-width:920px) {
-    .hero { min-height:auto; grid-template-columns:1fr; padding-top:3em; } .hero-visual { min-height:450px; }
     .mix-grid,.consulting { grid-template-columns:1fr; } .consulting { padding:4em; gap:3em; }
     .albums { grid-template-columns:repeat(4,1fr); } .plans { grid-template-columns:1fr; } .plan { min-height:280px; }
   }
   @media(max-width:640px) {
-    .hero { gap:2em; padding:2.8em 0 3.5em; } .hero h1 { font-size:clamp(38px,11vw,52px); } .hero-lead { font-size:16px; }
-    .hero-visual { min-height:380px; } .portrait { width:78%; } .record { width:170px; right:0; }
-    .proof { grid-template-columns:repeat(2,1fr); } .proof div { padding:1.5em 0; border-right:0; border-bottom:1px solid var(--rule); }
-    .proof div:nth-child(odd) { border-right:1px solid var(--rule); } .proof div:nth-child(even) { padding-left:1.2em; }
     .section { padding:5em 0; } .section-head { align-items:start; flex-direction:column; gap:1em; } .section-head>p { text-align:left; }
+    .pricing-first { padding-top:2em; padding-bottom:3em; }
+    .pricing-first .section-head { margin-bottom:1.5em; }
     .principles,.player { padding:1.4em; } .player-row { flex-wrap:wrap; } .progress-wrap { order:3; flex-basis:100%; } .ba-toggle { margin-left:auto; } .wave { height:75px; }
     .albums { grid-template-columns:repeat(2,1fr); gap:7px; } .album:nth-child(1),.album:nth-child(6) { grid-column:span 1; grid-row:span 1; }
     .album>div { padding:2.4em .7em .6em; transform:none; }
