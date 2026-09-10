@@ -53,7 +53,7 @@ EP를 준비하는 분에게도 이 질문을 해보고 싶습니다. 이 곡들
 **이 포스팅은 네이버 쇼핑 커넥트 활동의 일환으로, 판매 발생 시 수수료를 제공받습니다.**
 
 발매 계획 정리용 노트 · 뮤니드 It handy A5 3mm 그리드 노트  
-<a href="https://naver.me/xm0mxaq2" rel="sponsored nofollow noopener">https://naver.me/xm0mxaq2</a>
+<div><a href="https://naver.me/xm0mxaq2" rel="sponsored nofollow noopener">https://naver.me/xm0mxaq2</a></div>
 
 음악 컨설팅·상담: https://jaypd.kr/
 
