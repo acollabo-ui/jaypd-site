@@ -10,6 +10,7 @@ interface Props {
 const { title, description = SITE.description, ogType = 'website', schema, wide = false } = Astro.props;
 const pageTitle = title ? `${title} — ${SITE.title}` : SITE.title;
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const socialImage = new URL('/images/social/mix-consulting-20260917.png', SITE.url).href;
 // 현재 메뉴 표시용. 끝 슬래시 유무에 상관없이 맞도록 정규화한다.
 const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
@@ -31,6 +32,14 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
   <meta property="og:url" content={canonical} />
   <meta property="og:site_name" content={SITE.title} />
   <meta property="og:locale" content="ko_KR" />
+  <meta property="og:image" content={socialImage} />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:alt" content="Mix & Consulting — 캘리그래피 로고" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={socialImage} />
+  <meta name="twitter:image:alt" content="Mix & Consulting — 캘리그래피 로고" />
   {schemas.map((s) => (
     <script type="application/ld+json" set:html={JSON.stringify(s)} />
   ))}
