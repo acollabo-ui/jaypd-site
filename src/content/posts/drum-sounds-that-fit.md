@@ -48,7 +48,9 @@ tags: [드럼, 소스선택, 믹싱, 홈레코딩]
 
 이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받는다. 아래 T1 링크에 해당하며, A1 링크는 제휴 링크가 아니다.
 
-베이어다이나믹 T1 3세대 구매 링크: <a href="https://link.coupang.com/a/e7owjvcxmC" rel="sponsored nofollow noopener">https://link.coupang.com/a/e7owjvcxmC</a>  
+베이어다이나믹 T1 3세대 구매 링크:
+<div><a href="https://link.coupang.com/a/e7owjvcxmC" rel="sponsored nofollow noopener">https://link.coupang.com/a/e7owjvcxmC</a></div>
+
 베이어다이나믹 A1 해외 중고 판매 링크: https://www.ebay.de/itm/336686311571  
 A1 판매 페이지에는 한국 직배송 불가로 표시돼 있다. 국내 수령 방법은 판매자와 별도 확인이 필요하다.
 
