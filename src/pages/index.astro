@@ -15,9 +15,9 @@ const albums = [
 ];
 
 const plans = [
-  { type: 'DIRECTION', name: '아티스트 컨설팅', desc: '4P 기반 피드백과 실행 가능한 1년 활동 로드맵', detail: '1:1~4:1 · 온/오프라인 선택', price: '₩200,000', form: 'https://forms.gle/iDdpKm1SETYRgi7QA' },
-  { type: 'SOUND', name: '믹스 & 마스터링', desc: '곡의 의도를 살린 발매 가능한 완성본', detail: '1곡', price: '₩400,000', form: 'https://forms.gle/BERfFuNUYUV4zaMt6' },
-  { type: 'GROWTH', name: '믹스 + 컨설팅', desc: '좋은 결과물과 다음 곡을 직접 완성할 힘까지', detail: '녹화본 · 교재 · 1년 로드맵', price: '₩500,000', was: '₩600,000', badge: '가장 많이 선택하는 패키지', form: 'https://forms.gle/7k95rNwUkbxRTf2c9', featured: true },
+  { type: 'DIRECTION', name: '아티스트 컨설팅', desc: '4P 기반 피드백과 실행 가능한 1년 활동 로드맵', detail: '1:1~4:1 · 온/오프라인 선택', form: 'https://forms.gle/iDdpKm1SETYRgi7QA' },
+  { type: 'SOUND', name: '믹스 & 마스터링', desc: '곡의 의도를 살린 발매 가능한 완성본', detail: '1곡', form: 'https://forms.gle/BERfFuNUYUV4zaMt6' },
+  { type: 'GROWTH', name: '믹스 + 컨설팅', desc: '좋은 결과물과 다음 곡을 직접 완성할 힘까지', detail: '녹화본 · 교재 · 1년 로드맵', badge: '가장 많이 선택하는 패키지', form: 'https://forms.gle/7k95rNwUkbxRTf2c9', featured: true },
 ];
 
 const reviews = [
@@ -41,8 +41,6 @@ const serviceSchema = {
     addressRegion: '서울특별시',
     addressCountry: 'KR',
   },
-  priceRange: '₩200,000 ~ ₩500,000',
-  makesOffer: plans.map((p) => ({ '@type': 'Offer', name: p.name, price: p.price.replace(/[^0-9]/g, ''), priceCurrency: 'KRW' })),
   sameAs: [SITE.links.youtube],
 };
 ---
@@ -66,7 +64,7 @@ const serviceSchema = {
             <strong class="name">{plan.name}</strong>
             <span class="desc">{plan.desc}</span>
             <span class="detail">{plan.detail}</span>
-            <span class="plan-bottom"><span>{plan.was && <s>{plan.was}</s>}<b>{plan.price}</b></span><span>신청하기 ↗</span></span>
+            <span class="plan-bottom">신청하기 ↗</span>
           </a>
         ))}
       </div>
@@ -261,9 +259,8 @@ const serviceSchema = {
   .featured .desc,.featured .detail { color:color-mix(in srgb,var(--paper) 64%,transparent); }
   .detail { margin-top:1.5em; padding-top:1.2em; border-top:1px solid var(--rule); color:var(--ink-soft); font-size:12px; }
   .featured .detail { border-color:#ffffff24; }
-  .plan-bottom { margin-top:auto; display:flex; justify-content:space-between; align-items:end; gap:1em; color:var(--amber-dark); font-size:12px; }
-  .featured .plan-bottom { color:var(--amber); } .plan-bottom>span:first-child { display:flex; flex-direction:column; color:inherit; }
-  .plan-bottom s { color:var(--faint); } .plan-bottom b { color:var(--ink); font-size:25px; } .featured .plan-bottom b { color:var(--paper); }
+  .plan-bottom { margin-top:auto; color:var(--amber-dark); font-size:12px; }
+  .featured .plan-bottom { color:var(--amber); }
   .package-note { margin-top:18px; padding:1.3em 1.5em; display:grid; grid-template-columns:150px 1fr; gap:1.5em; border:1px solid var(--rule); }
   .package-note>b { color:var(--amber-dark); font-size:10px; letter-spacing:.15em; } .package-note p { margin:0; color:var(--ink-soft); font-size:13px; } .package-note strong { color:var(--ink); }
   .career-note { margin-top:24px; padding:0 1.5em; display:grid; grid-template-columns:150px 1fr; gap:1.5em; font-size:14px; }
@@ -301,8 +298,7 @@ const serviceSchema = {
   :global(:root[data-theme='dark']) .plan.featured .type,
   :global(:root[data-theme='dark']) .plan.featured .desc,
   :global(:root[data-theme='dark']) .plan.featured .detail,
-  :global(:root[data-theme='dark']) .plan.featured .plan-bottom,
-  :global(:root[data-theme='dark']) .plan.featured .plan-bottom b { color:#0a0b09; }
+  :global(:root[data-theme='dark']) .plan.featured .plan-bottom { color:#0a0b09; }
   :global(:root[data-theme='dark']) .plan.featured .detail { border-color:#0a0b0935; }
   :global(:root[data-theme='dark']) .plan.featured .badge { background:#0a0b09; color:var(--amber); }
 
