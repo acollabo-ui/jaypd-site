@@ -6,8 +6,9 @@ interface Props {
   ogType?: string;
   schema?: object | object[];
   wide?: boolean;
+  studio?: boolean;
 }
-const { title, description = SITE.description, ogType = 'website', schema, wide = false } = Astro.props;
+const { title, description = SITE.description, ogType = 'website', schema, wide = false, studio = false } = Astro.props;
 const pageTitle = title ? `${title} — ${SITE.title}` : SITE.title;
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
 const socialImage = new URL('/images/social/mix-consulting-20260917.png', SITE.url).href;
@@ -16,7 +17,7 @@ const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 ---
 <!doctype html>
-<html lang="ko">
+<html lang="ko" data-presentation={studio ? "studio" : undefined}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -201,6 +202,15 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
       main { padding-top: 1.5em; }
       .site-footer .footer-inner { flex-direction: column; gap: 1.5em; padding-bottom: 3em; }
     }
+
+    :root[data-presentation='studio'] {
+      --ink:#f1ebe1;--ink-soft:#b1aaa1;--paper:#171717;--amber:#ee956b;--amber-dark:#ee956b;
+      --rule:#3b3834;--tile:#1d1c1b;--faint:#aaa298; color-scheme:dark;
+    }
+    :root[data-presentation='studio'] body{background-image:none}
+    :root[data-presentation='studio'] main{padding-top:2em}
+    :root[data-presentation='studio'] .site-header nav a{padding:6px 0}
+    a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offset:4px}
   </style>
 </head>
 <body>
@@ -215,10 +225,10 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
         <a href="/#consulting">아티스트 컨설팅</a>
         <a href="/posts" aria-current={path.startsWith('/posts') ? 'page' : null}>블로그</a>
         <a class="nav-ext" href={SITE.links.youtube} target="_blank" rel="noopener">유튜브</a>
-        <button id="themeToggle" class="theme-toggle" type="button" aria-label="다크모드 켜기/끄기">
+        {!studio && <button id="themeToggle" class="theme-toggle" type="button" aria-label="다크모드 켜기/끄기">
           <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" /></svg>
           <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" /></svg>
-        </button>
+        </button>}
       </nav>
     </div>
   </header>
